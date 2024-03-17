@@ -31,16 +31,51 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel"""
+        """Creates a new instance with given parameters"""
         if not arg:
             print("** class name missing **")
-        elif arg not in ["BaseModel", "User", "State", "City", "Place",
-                         "Amenity", "Review"]:
+            return
+
+        args = arg.split()
+        class_name = args[0]
+
+        if class_name not in ["BaseModel", "User", "State", "City", "Place", "Amenity", "Review"]:
             print("** class doesn't exist **")
-        else:
-            new_instance = eval(arg)()
-            new_instance.save()
-            print(new_instance.id)
+            return
+
+        # Extracting key-value pairs from arguments
+        kwargs = {}
+        for arg in args[1:]:
+            if "=" not in arg:
+                print("** invalid syntax: {} **".format(arg))
+                return
+            key, value = arg.split("=")
+            key = key.strip()
+            value = value.strip()
+
+            # Handling value types
+            if value.startswith('"') and value.endswith('"'):
+                value = value[1:-1]
+                value = value.replace('_', ' ')
+            elif '.' in value:
+                try:
+                    value = float(value)
+                except ValueError:
+                    print("** invalid value for float type: {} **".format(value))
+                    return
+            else:
+                try:
+                    value = int(value)
+                except ValueError:
+                    print("** invalid value for integer type: {} **".format(value))
+                    return
+
+            kwargs[key] = value
+
+        # Creating a new instance and setting attributes
+        new_instance = eval(class_name)(**kwargs)
+        new_instance.save()
+        print(new_instance.id)
 
     def do_show(self, arg):
         """Prints the string representation of an instance based on the class
