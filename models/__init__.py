@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-""""instantiates a new instance of FileStorage"""
-
+"""This module instantiates an object of class FileStorage"""
 from models.engine.file_storage import FileStorage
+
+
 storage = FileStorage()
 storage.reload()
