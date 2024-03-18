@@ -60,9 +60,9 @@ class BaseModel:
         self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
-
+# The BaseModel class from which future classes will be derived the dictionary representation of the instance object
     def to_dict(self):
-        """returns a dictionary containing all keys/values of the instance"""
+        """Here we return a dictionary containing all keys/values of __dict__ of the instance and the class name"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
@@ -72,7 +72,11 @@ class BaseModel:
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
         return new_dict
-
+# The BaseModel class from which future classes will be derived this method deletes the current instance from the storage
     def delete(self):
-        """delete the current instance from the storage"""
+        """This method deletes the current instance from the storage"""
         models.storage.delete(self)
+# The BaseModel class from which future classes will be derived
+    def __repr__(self):
+        """returns a string representation of the instance object in the format: [<class name>] (<self.id>) <self.__dict__>"""
+        return self.__str__()
