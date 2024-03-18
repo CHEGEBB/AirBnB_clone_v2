@@ -53,11 +53,10 @@ class BaseModel:
 
     def __str__(self):
         """returns a string representation of the instance object in the format: [<class name>] (<self.id>) <self.__dict__>"""
-        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
-                                         self.__dict__)
-
+        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+# 
     def save(self):
-        """updates the attribute 'updated_at' with the current datetime"""
+        """This method updates the public instance attribute updated_at with the current datetime when the object is changed and saves the object to the storage"""
         self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
