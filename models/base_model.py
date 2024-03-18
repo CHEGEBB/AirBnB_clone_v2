@@ -52,7 +52,7 @@ class BaseModel:
             self.updated_at = self.created_at
 
     def __str__(self):
-        
+        """returns a string representation of the instance object in the format: [<class name>] (<self.id>) <self.__dict__>"""
         return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
                                          self.__dict__)
 
