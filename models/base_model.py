@@ -54,7 +54,7 @@ class BaseModel:
     def __str__(self):
         """returns a string representation of the instance object in the format: [<class name>] (<self.id>) <self.__dict__>"""
         return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id, self.__dict__)
-# 
+# The BaseModel class from which future classes will be derived
     def save(self):
         """This method updates the public instance attribute updated_at with the current datetime when the object is changed and saves the object to the storage"""
         self.updated_at = datetime.utcnow()
