@@ -1,19 +1,13 @@
-#!/usr/bin/python3
-
-"""This module entails the City class that inherits from BaseModel and Base and represents the city of a state"""
-
+#!/usr/bin/python
+""" holds class City"""
+import models
 from models.base_model import BaseModel, Base
-from os import getenv
-import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
-import models
-from models.place import place_amenity
 
-# This class inherits from BaseModel and Base and represents the city of a state
+
 class City(BaseModel, Base):
-
-    """This class represents the city of a state and inherits from BaseModel and Base"""
+    """Representation of city """
     if models.storage_t == "db":
         __tablename__ = 'cities'
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
@@ -24,6 +18,5 @@ class City(BaseModel, Base):
         name = ""
 
     def __init__(self, *args, **kwargs):
-
-        """This method initializes the City class and its attributes"""
+        """initializes city"""
         super().__init__(*args, **kwargs)

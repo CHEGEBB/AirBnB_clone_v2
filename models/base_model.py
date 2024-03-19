@@ -1,37 +1,40 @@
 #!/usr/bin/python3
-
-"""This module entails the BaseModel class"""
-
-# Importing the necessary modules
+"""This is the base model class for AirBnB"""
+from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 import models
-from os import getenv
-import sqlalchemy
 from sqlalchemy import Column, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
 import uuid
-# The time variable is equal to the format of the time
-time = "%Y-%m-%dT%H:%M:%S.%f"
-# We check if the storage type is equal to db, if it is we create the table amenities
+
+
 if models.storage_t == "db":
     Base = declarative_base()
 else:
     Base = object
 
-# The BaseModel class from which future classes will be derived HERE we check if the storage type is equal to db, if it is we create the table amenities
-class BaseModel:
+time = "%Y-%m-%dT%H:%M:%S.%f"
 
-    """This class is the base model for all other classes it contains the id, created_at, and updated_at attributes and methods for the other classes to inherit from it"""
+
+class BaseModel:
+    """This class will defines all common attributes/methods
+    for other classes
+    """
     if models.storage_t == "db":
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
         updated_at = Column(DateTime, default=datetime.utcnow)
 
-
-# The BaseModel class from which future classes will be derived
     def __init__(self, *args, **kwargs):
+        """Instantiation of base model class
+        Args:
+            args: it won't be used
+            kwargs: arguments for the constructor of the BaseModel
+        Attributes:
+            id: unique id generated
+            created_at: creation date
+            updated_at: updated date
+        """
 
-        """Here we initialize the BaseModel class that will be inherited by other classes"""
         if kwargs:
             for key, value in kwargs.items():
                 if key != "__class__":
@@ -52,17 +55,32 @@ class BaseModel:
             self.updated_at = self.created_at
 
     def __str__(self):
-        """returns a string representation of the instance object in the format: [<class name>] (<self.id>) <self.__dict__>"""
-        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id, self.__dict__)
-# The BaseModel class from which future classes will be derived
+        """returns a string
+        Return:
+            returns a string of class name, id, and dictionary
+        """
+        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
+                                         self.__dict__)
+
     def save(self):
-        """This method updates the public instance attribute updated_at with the current datetime when the object is changed and saves the object to the storage"""
+        """ Return:
+            returns a string of class name, id, and dictionary
+        """
         self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
-# The BaseModel class from which future classes will be derived the dictionary representation of the instance object
+
+    def __repr__(self):
+        """return a string representaion
+        """
+        return self.__str__()
+
     def to_dict(self):
-        """Here we return a dictionary containing all keys/values of __dict__ of the instance and the class name"""
+        """creates dictionary of the class  and returns
+        Return:
+            returns a dictionary of all the key values in __dict__
+        """
+        time = "%Y-%m-%dT%H:%M:%S.%f"
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
@@ -72,11 +90,7 @@ class BaseModel:
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
         return new_dict
-# The BaseModel class from which future classes will be derived this method deletes the current instance from the storage
+
     def delete(self):
-        """This method deletes the current instance from the storage"""
+        """delete the current instance from the storage"""
         models.storage.delete(self)
-# The BaseModel class from which future classes will be derived
-    def __repr__(self):
-        """returns a string representation of the instance object in the format: [<class name>] (<self.id>) <self.__dict__>"""
-        return self.__str__()
