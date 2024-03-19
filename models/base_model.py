@@ -4,9 +4,9 @@
 
 import uuid
 from datetime import datetime
+from sqlalchemy.ext.declarative import declarative_base
 import models
 import sqlalchemy
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
 from os import getenv
 
@@ -16,16 +16,21 @@ else:
     Base = object
 
 
+
 class BaseModel:
-    """This is the BaseModel class"""
+    """This is the BaseModel class it  acts as the base or foundation for all other classes in the project"""
 
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         id = Column(String(60), primary_key=True, nullable=False)
         created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
         updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
 
+
     def __init__(self, *args, **kwargs):
-        """This is the initialization of the BaseModel class"""
+        """This is the initialization of the BaseModel class
+        We use the __init__ method to initialize the BaseModel class
+        The __init__ method is a special method in Python that is called when an instance (object) of the class is created"""
+
         if kwargs:
             for key, value in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
@@ -44,17 +49,28 @@ class BaseModel:
             self.created_at = self.updated_at = datetime.now()
 
     def __str__(self):
-        """This is the string representation of the BaseModel class"""
+        """This is the string representation of the BaseModel class
+        We use the __str__ method to return a string representation of the BaseModel class
+        """
+
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
     
     def save(self):
-        """This saves the BaseModel instance"""
+        """This saves the BaseModel instance to the storage using the storage instance
+        We use the save method to save the BaseModel instance to the storage using the storage instance"""
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
-
+    
+    def __repr__(self) -> str:
+        """returns 
+        """
+        return self.__str__()
+    
     def to_dict(self):
-        """This returns a dictionary representation of the BaseModel class"""
+        """This returns a dictionary representation of the BaseModel class
+            A dictionary of all the key values in __dict__
+        """
         dictionary = self.__dict__.copy()
         dictionary['__class__'] = self.__class__.__name__
         dictionary['created_at'] = self.created_at.isoformat()
