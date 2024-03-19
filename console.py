@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-"""This module contains the HBNBCommand class, a subclass of cmd.Cmd"""
+
+"""In this module we define the HBNBCommand class that contains the functionality for the HBNB console"""
 
 import cmd
-import shlex
+import re
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -19,26 +20,26 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console """
     prompt = '(hbnb) '
+
     def _key_value_parser(self, args):
-        """creates a dictionary from a list of strings"""
+        """Creates a dictionary from a list of strings"""
         new_dict = {}
         for arg in args:
             if "=" in arg:
-                kvp = arg.split('=', 1)
-                key = kvp[0]
-                value = kvp[1]
+                key, value = re.split(r'\s*=\s*', arg, maxsplit=1)
                 if value[0] == value[-1] == '"':
-                    value = shlex.split(value)[0].replace('_', ' ')
+                    value = value[1:-1].replace('_', ' ')
                 else:
                     try:
                         value = int(value)
-                    except:
+                    except ValueError:
                         try:
                             value = float(value)
-                        except:
-                            continue
+                        except ValueError:
+                            pass  # or handle the error as needed
                 new_dict[key] = value
         return new_dict
+
 
     def do_EOF(self, arg):
         """Exits console"""
@@ -70,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """Prints an instance as a string based on the class and id"""
-        args = shlex.split(arg)
+        args = re.split(arg)
         if len(args) == 0:
             print("** class name missing **")
             return False
@@ -88,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class and id"""
-        args = shlex.split(arg)
+        args = re.split(arg)
         if len(args) == 0:
             print("** class name missing **")
         elif args[0] in classes:
@@ -106,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints string representations of instances"""
-        args = shlex.split(arg)
+        args = re.split(arg)
         obj_list = []
         if len(args) == 0:
             obj_dict = models.storage.all()
@@ -123,7 +124,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """Update an instance based on the class name, id, attribute & value"""
-        args = shlex.split(arg)
+        args = re.split(arg)
         integers = ["number_rooms", "number_bathrooms", "max_guest",
                     "price_by_night"]
         floats = ["latitude", "longitude"]
