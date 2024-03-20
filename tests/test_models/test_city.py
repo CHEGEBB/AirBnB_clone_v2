@@ -70,9 +70,16 @@ class TestCityDocs(unittest.TestCase):
                     )
 
 class TestCity(unittest.TestCase):
-    """Test the City class"""
+    """This class tests the City class
+    It tests for the existence of the City instance
+    It tests for the proper instantiation of the City instance
+    It tests for the inheritance of the City class
+    It tests for the attributes of the City class
+    """
     def test_instantiation(self):
-        """Test that objects are being created"""
+        """This method checks for the existence of the City instance
+        It checks if the City instance is properly instantiated
+        """
         my_city = City()
         self.assertIsInstance(my_city, City)
         my_city.name = "San Francisco"
