@@ -8,6 +8,7 @@ It tests for the existence of docstrings and adherance to PEP8
 
 import inspect
 import models
+from models import place
 import pep8 as pycodestyle
 import unittest
 from models.base_model import BaseModel
