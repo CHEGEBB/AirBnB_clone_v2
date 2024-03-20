@@ -1,66 +1,90 @@
 #!/usr/bin/python3
-"""This module contains the FileStorage class"""
-
-
-import json
-from models.amenity import Amenity
-from models.base_model import BaseModel
+"""This module contains the FileStorage class
+This module contains the FileStorage class.
+The FileStorage class manages the file storage.
+"""
+from models.state import State
 from models.city import City
 from models.place import Place
+from models.amenity import Amenity
 from models.review import Review
-from models.state import State
+import json
+from os import path
+from models.base_model import BaseModel
 from models.user import User
 
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
-
+classes = {"BaseModel": BaseModel, "User": User, "State": State,
+              "City": City, "Place": Place, "Amenity": Amenity,
+              "Review": Review}
 
 class FileStorage:
-    """serializes instances to a JSON file & deserializes back to instances"""
+    """This class interacts with the JSON file system
+    This class interacts with the JSON file system.
+    The FileStorage class manages the
+    JSON file storage for the application.
+    """
     __file_path = "file.json"
     __objects = {}
 
     def all(self, cls=None):
-        """returns the dictionary __objects"""
-        if cls is not None:
-            new_dict = {}
-            for key, value in self.__objects.items():
-                if cls == value.__class__ or cls == value.__class__.__name__:
-                    new_dict[key] = value
-            return new_dict
-        return self.__objects
+        """This method queries the current database session
+        This method queries the current database session.
+        It retrieves objects from the database session.
+        """
+        if cls is None:
+            return self.__objects
+        new_dict = {}
+        for key, value in self.__objects.items():
+            if value.__class__ == cls:
+                new_dict[key] = value
+        return new_dict
 
     def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
-        if obj is not None:
-            key = obj.__class__.__name__ + "." + obj.id
-            self.__objects[key] = obj
+        """This method adds a new object to the current database session
+        This method adds a new object to the current database session.
+        It adds a new object to the database session.
+        """
+        key = obj.__class__.__name__ + '.' + obj.id
+        self.__objects[key] = obj
 
     def save(self):
-        """serializes __objects to the JSON file (path: __file_path)"""
-        json_objects = {}
-        for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict()
-        with open(self.__file_path, 'w') as f:
-            json.dump(json_objects, f)
+        """This method saves the current database session to the file system
+        This method saves the current database session to the file system.
+        It saves the current database session to the file system.
+        """
+        new_dict = {}
+        for key, value in self.__objects.items():
+            new_dict[key] = value.to_dict()
+        with open(self.__file_path, 'w', encoding='utf-8') as f:
+            json.dump(new_dict, f)
 
     def reload(self):
-        """deserializes the JSON file to __objects"""
-        try:
-            with open(self.__file_path, 'r') as f:
-                jo = json.load(f)
-            for key in jo:
-                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
-            pass
+        """This method loads the current database session from the file system
+        This method loads the current database session from the file system.
+        It loads the current database session from the file system.
+        """
+        if path.isfile(self.__file_path):
+            with open(self.__file_path, 'r', encoding='utf-8') as f:
+                new_dict = json.load(f)
+            for key, value in new_dict.items():
+                cls = value['__class__']
+                obj = classes[cls](**value)
+                self.__objects[key] = obj   
+
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """This method deletes an object from the current database session
+        This method deletes an object from the current database session.
+        It deletes an object from the database session.
+        """
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
 
     def close(self):
-        """call reload() method for deserializing the JSON file to objects"""
+        """This method calls the reload method
+        This method calls the reload method.
+        It reloads the database session from the file system.
+        """
         self.reload()
