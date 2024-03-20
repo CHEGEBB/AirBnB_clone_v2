@@ -224,7 +224,9 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(place.city_id, "")
 
     def test_user_id_attr(self):
-        """Test Place has attr user_id, and it's an empty string"""
+        """This method checks for the user_id attribute of the Place class
+        It checks if the place has the user_id attribute
+        """
         place = Place()
         self.assertTrue(hasattr(place, "user_id"))
         if models.storage_t == 'db':
@@ -233,7 +235,9 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(place.user_id, "")
 
     def test_name_attr(self):
-        """Test Place has attr name, and it's an empty string"""
+        """This method checks for the name attribute of the Place class
+        It checks if the place has the name attribute
+        """
         place = Place()
         self.assertTrue(hasattr(place, "name"))
         if models.storage_t == 'db':
