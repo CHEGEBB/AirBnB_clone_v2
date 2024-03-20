@@ -49,14 +49,19 @@ class TestCityDocs(unittest.TestCase):
                             "city.py needs a docstring")
     
         def test_class_docstring(self):
-            """Test for the City class docstring"""
+            """This method checks for the existence of docstrings in City class
+            It checks for the presence of a docstring in the City class
+            """
             self.assertIsNot(City.__doc__, None,
                             "City class needs a docstring")
             self.assertTrue(len(City.__doc__) >= 1,
                             "City class needs a docstring")
     
         def test_func_docstrings(self):
-            """Test for the presence of docstrings in City methods"""
+            """This method checks for the presence of docstrings in City methods
+            It checks for the presence of docstrings in all the methods of the class
+            The docstrings should be present and of a certain length
+            """
             for func in self.city_funcs:
                 with self.subTest(function=func):
                     self.assertIsNot(
