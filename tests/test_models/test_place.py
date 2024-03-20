@@ -1,74 +1,221 @@
 #!/usr/bin/python3
+
 """
-Contains the TestPlaceDocs classes
+This module contains tests for the Place class it  tests the Place class
+for expected behavior and documentation
+It tests for the existence of docstrings and adherance to PEP8
 """
 
-from datetime import datetime
 import inspect
 import models
-from models import place
-from models.base_model import BaseModel
-import pep8
+import pep8 as pycodestyle
 import unittest
-Place = place.Place
-
+from models.base_model import BaseModel
+from datetime import datetime
+from unittest import mock
+Place = models.place.Place
+module_doc = models.place.__doc__
 
 class TestPlaceDocs(unittest.TestCase):
-    """Tests to check the documentation and style of Place class"""
+    """This class tests for Place documentation and style
+    It tests for the existence of classes, methods and
+    functions docstrings and adherance to PEP8
+    """
+
     @classmethod
-    def setUpClass(cls):
-        """Set up for the doc tests"""
-        cls.place_f = inspect.getmembers(Place, inspect.isfunction)
+    def setUpClass(self):
+        """This method set the instances to be tested
+        It runs before any test
+        The instances are the methods in the class
+        """
+        self.place_funcs = inspect.getmembers(Place, inspect.isfunction)
 
-    def test_pep8_conformance_place(self):
-        """Test that models/place.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/place.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+    def test_pep8_conformance(self):
+        """This method checks for pep8 conformance
+        It will check for PEP8 conformance in the module and the test
+        The test uses the pycodestyle library
+        """
+        for path in ['models/place.py',
+                     'tests/test_models/test_place.py']:
+            with self.subTest(path=path):
+                errors = pycodestyle.Checker(path).check_all()
+                self.assertEqual(errors, 0)
 
-    def test_pep8_conformance_test_place(self):
-        """Test that tests/test_models/test_place.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_place.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
-    def test_place_module_docstring(self):
-        """Test for the place.py module docstring"""
-        self.assertIsNot(place.__doc__, None,
-                         "place.py needs a docstring")
-        self.assertTrue(len(place.__doc__) >= 1,
+    def test_module_docstring(self):
+        """This method checks for the existence of module docstring
+        It checks for the presence of a docstring in the module"""
+        self.assertIsNot(module_doc, None,
+                        "place.py needs a docstring")
+        self.assertTrue(len(module_doc) > 1,
                         "place.py needs a docstring")
 
-    def test_place_class_docstring(self):
-        """Test for the Place class docstring"""
+    def test_class_docstring(self):
+        """This method checks for the existence of docstrings in Place class
+        It checks for the presence of a docstring in the Place class
+        """
         self.assertIsNot(Place.__doc__, None,
-                         "Place class needs a docstring")
+                        "Place class needs a docstring")
         self.assertTrue(len(Place.__doc__) >= 1,
                         "Place class needs a docstring")
 
-    def test_place_func_docstrings(self):
-        """Test for the presence of docstrings in Place methods"""
-        for func in self.place_f:
-            self.assertIsNot(func[1].__doc__, None,
-                             "{:s} method needs a docstring".format(func[0]))
-            self.assertTrue(len(func[1].__doc__) >= 1,
-                            "{:s} method needs a docstring".format(func[0]))
-
-
+    def test_func_docstrings(self):
+        """This method checks for the existence of docstrings in Place methods
+        It checks for the presence of a docstring in the methods of the class
+        """
+        for func in self.place_funcs:
+            with self.subTest(func=func):
+                self.assertIsNot(func[1].__doc__, None,
+                                "{} method needs a docstring".format(func[0]))
+                self.assertTrue(len(func[1].__doc__) >= 1,
+                                "{} method needs a docstring".format(func[0]))
+                
 class TestPlace(unittest.TestCase):
-    """Test the Place class"""
-    def test_is_subclass(self):
-        """Test that Place is a subclass of BaseModel"""
-        place = Place()
-        self.assertIsInstance(place, BaseModel)
-        self.assertTrue(hasattr(place, "id"))
-        self.assertTrue(hasattr(place, "created_at"))
-        self.assertTrue(hasattr(place, "updated_at"))
 
+    def test_is_subclass(self):
+        """This method checks if Place is a subclass of BaseModel
+        Place should be a subclass of BaseModel
+        """
+        self.assertTrue(issubclass(Place, BaseModel))
+
+    def test_fields(self):
+        """This method checks the fields in Place class
+        The Place class should have the following fields
+        city_id, user_id, name, description, number_rooms, number_bathrooms
+        max_guest, price_by_night, latitude, longitude, amenity_ids
+        """
+        place = Place()
+        self.assertIsInstance(place.city_id, str)
+        self.assertIsInstance(place.user_id, str)
+        self.assertIsInstance(place.name, str)
+        self.assertIsInstance(place.description, str)
+        self.assertIsInstance(place.number_rooms, int)
+        self.assertIsInstance(place.number_bathrooms, int)
+        self.assertIsInstance(place.max_guest, int)
+        self.assertIsInstance(place.price_by_night, int)
+        self.assertIsInstance(place.latitude, float)
+        self.assertIsInstance(place.longitude, float)
+        self.assertIsInstance(place.amenity_ids, list)
+
+    def test_place_type(self):
+        """This method checks the type of place
+        The place should be of type Place
+        """
+        place = Place()
+        self.assertEqual(type(place), Place)
+
+    def test_place_id(self):
+        """This method checks the type of id
+        The id should be a string
+        """
+        place = Place()
+        self.assertEqual(type(place.id), str)
+
+    def test_created_at(self):
+        """This method checks the type of created_at
+        The created_at should be a datetime object
+        """
+        place = Place()
+        self.assertEqual(type(place.created_at), datetime)
+
+    def test_updated_at(self):
+        """This method checks the type of updated_at
+        The updated_at should be a datetime object
+        """
+        place = Place()
+        self.assertEqual(type(place.updated_at), datetime)
+
+    def test_str_method(self):
+        """This method checks the str method
+        The str method should return a string
+        """
+        place = Place()
+        string = str(place)
+        self.assertEqual(type(string), str)
+
+    def test_to_dict_method(self):
+        """This method checks the to_dict method
+        The to_dict method should return a dictionary
+        """
+        place = Place()
+        place_dict = place.to_dict()
+        self.assertEqual(type(place_dict), dict)
+        place_class = place_dict['__class__']
+        self.assertEqual(place_class, 'Place')
+
+    def test_to_dict_attr(self):
+        """This method checks the to_dict method
+        The to_dict method should return a dictionary with the following attributes
+        id, created_at, updated_at, __class__
+        """
+        place = Place()
+        place_dict = place.to_dict()
+        self.assertTrue('id' in place_dict)
+        self.assertTrue('created_at' in place_dict)
+        self.assertTrue('updated_at' in place_dict)
+        self.assertTrue('__class__' in place_dict)
+
+    def test_str(self):
+        """This method checks for the __str__ method of the Place class
+        It checks if the output is in the specified format
+        The method is used to print an object
+        """
+        place = Place()
+        string = "[Place] ({}) {}".format(place.id, place.__dict__)
+        self.assertEqual(string, str(place))
+
+    def test_save(self):
+        """This method checks for the save method of the Place class
+        It checks if the attribute updated_at is updated
+        """
+        place = Place()
+        old_updated_at = place.updated_at
+        place.save()
+        self.assertNotEqual(old_updated_at, place.updated_at)
+
+    def test_kwargs(self):
+        """This method checks for the kwargs argument of the Place class
+        It checks if the class can be instantiated with the kwargs
+        """
+        place = Place()
+        place.name = "House"
+        place.save()
+        place_dict = place.to_dict()
+        place_json = Place(**place_dict)
+        self.assertEqual(place_json.name, "House")
+        self.assertEqual(place_json.__class__.__name__,
+                            "Place")
+        self.assertIsInstance(place_json, Place)
+        self.assertEqual(place_json.to_dict()['name'], "House")
+        self.assertEqual(place_json.to_dict()['id'], place.id)
+        self.assertEqual(place_json.to_dict()['created_at'],
+                            place.created_at.isoformat())
+        self.assertEqual(place_json.to_dict()['updated_at'],
+                            place.updated_at.isoformat())
+        self.assertEqual(place_json.to_dict()['__class__'],
+                            "Place")
+        self.assertEqual(place_json.to_dict()['city_id'], place.city_id)
+        self.assertEqual(place_json.to_dict()['user_id'], place.user_id)
+        self.assertEqual(place_json.to_dict()['description'],
+                            place.description)
+        self.assertEqual(place_json.to_dict()['number_rooms'],
+                            place.number_rooms)
+        self.assertEqual(place_json.to_dict()['number_bathrooms'],
+                            place.number_bathrooms)
+        self.assertEqual(place_json.to_dict()['max_guest'],
+                            place.max_guest)
+        self.assertEqual(place_json.to_dict()['price_by_night'],
+                            place.price_by_night)
+        self.assertEqual(place_json.to_dict()['latitude'],
+                            place.latitude)
+        self.assertEqual(place_json.to_dict()['longitude'],
+                            place.longitude)
+        self.assertEqual(place_json.to_dict()['amenity_ids'],
+                            place.amenity_ids)
+        
     def test_city_id_attr(self):
-        """Test Place has attr city_id, and it's an empty string"""
+        """This method checks for the city_id attribute of the Place class
+        It checks if the place has the city_id attribute
+        """
         place = Place()
         self.assertTrue(hasattr(place, "city_id"))
         if models.storage_t == 'db':
