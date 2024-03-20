@@ -246,7 +246,9 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(place.name, "")
 
     def test_description_attr(self):
-        """Test Place has attr description, and it's an empty string"""
+        """This method checks for the description attribute of the Place class
+        It checks if the place has the description attribute
+        """
         place = Place()
         self.assertTrue(hasattr(place, "description"))
         if models.storage_t == 'db':
@@ -255,7 +257,10 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(place.description, "")
 
     def test_number_rooms_attr(self):
-        """Test Place has attr number_rooms, and it's an int == 0"""
+        """This method checks for the number_rooms attribute of the Place class
+        It checks if the place has the number_rooms attribute
+        """
+
         place = Place()
         self.assertTrue(hasattr(place, "number_rooms"))
         if models.storage_t == 'db':
@@ -275,8 +280,9 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(place.number_bathrooms, 0)
 
     def test_max_guest_attr(self):
-        """Test Place has attr max_guest, and it's an int == 0"""
-        place = Place()
+        """This method checks for the max_guest attribute of the Place class
+        It checks if the place has the max_guest attribute
+        """
         self.assertTrue(hasattr(place, "max_guest"))
         if models.storage_t == 'db':
             self.assertEqual(place.max_guest, None)
@@ -285,7 +291,9 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(place.max_guest, 0)
 
     def test_price_by_night_attr(self):
-        """Test Place has attr price_by_night, and it's an int == 0"""
+        """This method checks for the price_by_night attribute of the Place class
+        It checks if the place has the price_by_night attribute
+        """
         place = Place()
         self.assertTrue(hasattr(place, "price_by_night"))
         if models.storage_t == 'db':
