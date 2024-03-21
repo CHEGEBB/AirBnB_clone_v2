@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-"""This is the city module and it contains the City class the city class inherits from the base model class
+"""This is the city module and it contains the City class the
+city class inherits from the base model class
     The City class represents the city of the place"""
 
 from models.base_model import BaseModel, Base
@@ -33,9 +34,9 @@ class City(BaseModel, Base):
                 if place.city_id == self.id:
                     place_list.append(place)
             return place_list
-        
+
     def __init__(self, *args, **kwargs):
         """This is the initialization of the City class
         We use the __init__ method to initialize the City class
-        The __init__ method is a special method in Python that is called whenn an instance (object) of the class is created"""
+        The __init__ method is a special method in Python that is called when an instance (object) of the class is created"""
         super().__init__(*args, **kwargs)
