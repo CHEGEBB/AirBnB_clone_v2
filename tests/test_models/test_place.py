@@ -55,7 +55,8 @@ class TestPlaceDocs(unittest.TestCase):
         It checks for the presence of a docstring in the Place class
         """
         self.assertIsNot(Place.__doc__, None, "Place class needs a docstring")
-        self.assertTrue(len(Place.__doc__) >= 1, "Place class needs a docstring")
+        self.assertTrue(len(Place.__doc__) >= 1,
+                        "Place class needs a docstring")
 
     def test_func_docstrings(self):
         """This method checks for the existence of docstrings in Place methods
