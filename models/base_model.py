@@ -66,7 +66,7 @@ class BaseModel:
         """returns 
         """
         return self.__str__()
-    
+
     def to_dict(self):
         """This returns a dictionary representation of the BaseModel class
             A dictionary of all the key values in __dict__
@@ -78,7 +78,7 @@ class BaseModel:
         if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
         return dictionary
-    
+
     def delete(self):
         """This deletes the current instance from the storage"""
         models.storage.delete(self)
