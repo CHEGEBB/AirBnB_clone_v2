@@ -5,6 +5,7 @@ The test ensures the console module is working as expected.
 """
 
 from io import StringIO
+from sqlachemy.ext.declarative import declarative_base
 from unittest.mock import patch
 from models import storage
 from models.base_model import BaseModel
@@ -23,6 +24,12 @@ import sys
 from models.amenity import Amenity
 from models.review import Review
 
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    from models.engine.db_storage import DBStorage
+    storage = DBStorage()
+else:
+    from models.engine.file_storage import FileStorage
+    storage = FileStorage()
 
 class TestConsoleDocs(unittest.TestCase):
     """This class contains test cases for the console module
