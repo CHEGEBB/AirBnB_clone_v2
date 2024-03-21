@@ -1,60 +1,35 @@
 #!/usr/bin/python3
+""" This is the state module and it contains the State class
+The State class inherits from the BaseModel class
+"""
 
-"""
-This is the state module and it contains the State
-class the State class inherits from the BaseModel class
-The State class represents the state of the
-and it contains the state name
-"""
 
 from models.city import City
-from sqlalchemy.ext.declarative import declarative_base
-import uuid
-from datetime import datetime
-from models.base_model import BaseModel, Base
+import models
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-import models
-import os
+from models.base_model import BaseModel, Base
 
 class State(BaseModel, Base):
-    """This is the State class it represents the state of the place
-    The State class inherits from the BaseModel class"""
-
-    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    """Representation of state """
+    if models.storage_t == "db":
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state", cascade="all, delete")
+        cities = relationship("City", backref="state")
     else:
         name = ""
 
-        @property
-        def cities(self):
-            """This is the getter method for the cities attribute"""
-            if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-                cities = models.storage.all("City")
-                city_list = []
-                for city in cities.values():
-                    if city.state_id == self.id:
-                        city_list.append(city)
-                return city_list
-            else:
-                return [city for city in models.storage.all(State.City)
-                        if city.state_id == self.id]
-
-    if os.getenv('HBNB_TYPE_STORAGE') != 'db':
-        @property
-        def cities(self):
-            """This is the getter method for the cities attribute"""
-            return [city for city in models.storage.all(State.City)
-                    if city.state_id == self.id]
-
     def __init__(self, *args, **kwargs):
-        """
-        This is the initialization of the State class
-        We use the __init__ method to initialize the State class
-        The __init__ method is a special method in Python
-        that is called when an instance (object) of the class is created
-        """
+        """initializes state"""
         super().__init__(*args, **kwargs)
-        
+
+    if models.storage_t != "db":
+        @property
+        def cities(self):
+            """getter for list of city instances related to the state"""
+            city_list = []
+            all_cities = models.storage.all(City)
+            for city in all_cities.values():
+                if city.state_id == self.id:
+                    city_list.append(city)
+            return city_list
