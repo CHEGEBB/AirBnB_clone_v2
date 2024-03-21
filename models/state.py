@@ -10,6 +10,10 @@ from models.engine.file_storage import FileStorage
 from models.engine.db_storage import DBStorage
 import models
 from models.city import City
+from models.state import State
+from models.place import Place
+from models.review import Review
+from models.amenity import Amenity
 from models.base_model import BaseModel
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String
@@ -22,9 +26,7 @@ else:
     storage = FileStorage()
     storage.reload()
 
-Base = declarative_base()
-
-class State(BaseModel, Base):
+class state:
     """This is the state class
     The state class inherits from the BaseModel class
     """
