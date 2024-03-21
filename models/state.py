@@ -11,12 +11,13 @@ from sqlalchemy.ext.declarative import declarative_base
 import uuid
 from datetime import datetime
 from models.base_model import BaseModel, Base
-from models.city import City
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import models
 import os
 
+# Import City class
+from models.city import City
 
 class State(BaseModel, Base):
     """This is the State class it represents the state of the place
