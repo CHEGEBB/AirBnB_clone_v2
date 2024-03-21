@@ -5,7 +5,8 @@ This module contains the test for the User class
 The test ensures the User class is working as expected.
 It includes test cases for the attributes and methods of the User class.
 """
-
+from sqlalchemy.ext.declarative import declarative_base
+import os
 from datetime import datetime
 import inspect
 import models
@@ -15,6 +16,11 @@ import pep8
 import unittest
 
 User = user.User
+
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
+else:
+    Base = object
 
 
 class TestUserDocs(unittest.TestCase):
