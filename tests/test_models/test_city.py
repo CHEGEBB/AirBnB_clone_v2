@@ -16,7 +16,8 @@ City = models.city.City
 module_doc = models.city.__doc__
 
 class TestCityDocs(unittest.TestCase):
-        """This class tests for City documentation and style
+        """
+        This class tests for City documentation and style
         It tests for the existence of classes, methods and
         functions docstrings and adherance to PEP8
          """
