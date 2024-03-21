@@ -1,10 +1,3 @@
-#!/usr/bin/python3
-
-""""This is the console module it contains the class HBNBCommand
-    that inherits from the class cmd.Cmd
-    This class is the command interpreter of the console
-    It is the entry point of the command interpreter
-"""
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -15,7 +8,6 @@ from models.amenity import Amenity
 from models.review import Review
 from datetime import datetime
 import cmd
-import sys
 import shlex
 
 classes = {"BaseModel": BaseModel, "User": User, "State": State,
@@ -27,6 +19,7 @@ class HBNBCommand(cmd.Cmd):
     It is the command interpreter of the console
     It is the entry point of the command interpreter
     """
+
     prompt = "(hbnb) "
 
     def do_EOF(self, line):
@@ -71,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id
-        (save the change into the JSON file)""" 
+        (save the change into the JSON file)"""
         args = line.split()
         if len(args) == 0:
             print("** class name missing **")
