@@ -7,6 +7,7 @@ The State class represents the state of the
 and it contains the state name
 """
 
+from sqlalchemy.ext.declarative import declarative_base
 import uuid
 from datetime import datetime
 from models.base_model import BaseModel, Base
