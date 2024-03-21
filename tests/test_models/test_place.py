@@ -146,7 +146,8 @@ class TestPlace(unittest.TestCase):
 
     def test_to_dict_attr(self):
         """This method checks the to_dict method
-        The to_dict method should return a dictionary with the following attributes
+        The to_dict method should return a
+        dictionary with the following attributes
         id, created_at, updated_at, __class__
         """
         place = Place()
@@ -166,7 +167,8 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(string, str(place))
 
     def test_save(self):
-        """This method checks for the save method of the Place class
+        """
+        This method checks for the save method of the Place class
         It checks if the attribute updated_at is updated
         """
         place = Place()
@@ -175,7 +177,8 @@ class TestPlace(unittest.TestCase):
         self.assertNotEqual(old_updated_at, place.updated_at)
 
     def test_kwargs(self):
-        """This method checks for the kwargs argument of the Place class
+        """
+        This method checks for the kwargs argument of the Place class
         It checks if the class can be instantiated with the kwargs
         """
         place = Place()
@@ -215,7 +218,8 @@ class TestPlace(unittest.TestCase):
                             place.amenity_ids)
         
     def test_city_id_attr(self):
-        """This method checks for the city_id attribute of the Place class
+        """
+        This method checks for the city_id attribute of the Place class
         It checks if the place has the city_id attribute
         """
         place = Place()
@@ -237,7 +241,8 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(place.user_id, "")
 
     def test_name_attr(self):
-        """This method checks for the name attribute of the Place class
+        """
+        This method checks for the name attribute of the Place class
         It checks if the place has the name attribute
         """
         place = Place()
@@ -248,7 +253,8 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(place.name, "")
 
     def test_description_attr(self):
-        """This method checks for the description attribute of the Place class
+        """
+        This method checks for the description attribute of the Place class
         It checks if the place has the description attribute
         """
         place = Place()
@@ -259,7 +265,8 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(place.description, "")
 
     def test_number_rooms_attr(self):
-        """This method checks for the number_rooms attribute of the Place class
+        """
+        This method checks for the number_rooms attribute of the Place class
         It checks if the place has the number_rooms attribute
         """
 
