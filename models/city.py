@@ -4,11 +4,17 @@
 city class inherits from the base model class
     The City class represents the city of the place"""
 
-from models.base_model import BaseModel, Base
+from models.base_model import BaseModel
 import models
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String, ForeignKey
 from os import getenv
+from sqlalchemy.ext.declarative import declarative_base
+
+if getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
+else:
+    Base = object
 
 
 class City(BaseModel, Base):
