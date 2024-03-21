@@ -10,8 +10,7 @@ import uuid
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 import models
-import sqlalchemy
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, DateTime, ForeignKey
 from os import getenv
 
 if getenv('HBNB_TYPE_STORAGE') == 'db':
