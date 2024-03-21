@@ -129,12 +129,14 @@ class HBNBCommand(cmd.Cmd):
         if class_name not in classes:
             print("** class doesn't exist **")
             return
-        print([str(obj) for key, obj in storage.all().items() if key.startswith(class_name + '.')])
+        print([str(obj) for key, obj in
+               storage.all().items() if key.startswith(class_name + '.')])
 
     def do_update(self, line):
         """Updates an instance based on 
         the class name and id by adding or updating attribute
-        (save the change into the JSON file)"""
+        (save the change into the JSON file)
+        """
         args = shlex.split(line)
         if len(args) < 3:
             print("** class name missing **")
