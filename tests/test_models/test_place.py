@@ -76,7 +76,8 @@ class TestPlaceDocs(unittest.TestCase):
 class TestPlace(unittest.TestCase):
 
     def test_is_subclass(self):
-        """This method checks if Place is a subclass of BaseModel
+        """
+        This method checks if Place is a subclass of BaseModel
         Place should be a subclass of BaseModel
         """
         self.assertTrue(issubclass(Place, BaseModel))
@@ -295,7 +296,8 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(place.max_guest, 0)
 
     def test_price_by_night_attr(self):
-        """This method checks for the price_by_night attribute of the Place class
+        """This method checks for the price_by_night
+        attribute of the Place class
         It checks if the place has the price_by_night attribute
         """
         place = Place()
