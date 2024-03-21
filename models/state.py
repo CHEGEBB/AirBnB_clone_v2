@@ -3,7 +3,7 @@
 """
 This is the state module and it contains the State
 class the State class inherits from the BaseModel class
-The State class represents the state of the 
+The State class represents the state of the
 and it contains the state name
 """
 
@@ -37,7 +37,7 @@ class State(BaseModel, Base):
                 if city.state_id == self.id:
                     city_list.append(city)
             return city_list
-        
+
     def __init__(self, *args, **kwargs):
         """
         This is the initialization of the State class
