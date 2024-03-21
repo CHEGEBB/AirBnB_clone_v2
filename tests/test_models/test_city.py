@@ -5,6 +5,9 @@ This module contains tests for the City class it  tests the City class
 for expected behavior and documentation
 It tests for the existence of docstrings and adherance to PEP8
 """
+
+from sqlalchemy.ext.declarative import declarative_base
+import os
 import inspect
 import models
 import pep8 as pycodestyle
@@ -13,6 +16,12 @@ from models.base_model import BaseModel
 from datetime import datetime
 City = models.city.City
 module_doc = models.city.__doc__
+
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
+else:
+    Base = object
+
 
 
 class TestCityDocs(unittest.TestCase):
