@@ -1,35 +1,15 @@
 #!/usr/bin/python3
-
-"""This is the user module. It contains the User class.
-This class inherits from BaseModel.
-It defines the attributes of the User class.
-It also contains the User class methods.
-"""
-
+""" holds class User"""
+import models
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-import os
-from sqlalchemy import Integer
-from models.base_model import BaseModel
-from sqlalchemy.ext.declarative import declarative_base
-Base = declarative_base()
 
 
 class User(BaseModel, Base):
-    """This is the User class.
-    
-    Attributes:
-        id (int): The primary key of the user.
-        email (str): The email of the user.
-        password (str): The password of the user.
-        first_name (str): The first name of the user.
-        last_name (str): The last name of the user.
-    """
-    
-    __tablename__ = 'users'
-
-    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        id = Column(Integer, primary_key=True)
+    """Representation of a user """
+    if models.storage_t == 'db':
+        __tablename__ = 'users'
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
@@ -43,9 +23,5 @@ class User(BaseModel, Base):
         last_name = ""
 
     def __init__(self, *args, **kwargs):
-        """This is the __init__ method.
-        It is the initializer of the User class.
-        It calls the super class initializer.
-        It also checks the environment variable for the type of storage.
-        """
+        """initializes user"""
         super().__init__(*args, **kwargs)
