@@ -13,30 +13,30 @@ else:
     storage = FileStorage()
     storage.reload()
     
-def close():
+def close(self):
     """This method calls the close method on the storage instance"""
-    storage.close()
+    self.storage.close()
 
-def reload():
+def reload(self):
     """This method calls the reload method on the storage instance"""
-    storage.reload()
+    self.storage.reload()
 
-def all():
+def all(self):
     """This method calls the all method on the storage instance"""
-    return storage.all()
+    return self.storage.all()
 
-def new(obj):
+def new(self, obj):
     """This method calls the new method on the storage instance"""
-    storage.new(obj)
+    self.storage.new(obj)
 
-def save():
+def save(self):
     """This method calls the save method on the storage instance"""
-    storage.save()
+    self.storage.save()
 
-def delete(obj=None):
+def delete(self, obj=None):
     """This method calls the delete method on the storage instance"""
-    storage.delete(obj)
+    self.storage.delete(obj)
 
-def get(cls, id):
+def get(self, cls, id):
     """This method calls the get method on the storage instance"""
-    return storage.get(cls, id)
+    return self.storage.get(cls, id)
