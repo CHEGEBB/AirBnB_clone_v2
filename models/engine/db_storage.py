@@ -10,7 +10,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from models.amenity import Amenity
 from models.base_model import Base
 from models.state import State
-from models.user import Use
+from models.user import User
 from models.city import City
 from models.place import Place
 from models.review import Review
