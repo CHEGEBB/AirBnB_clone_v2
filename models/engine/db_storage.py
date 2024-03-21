@@ -41,7 +41,8 @@ class DBStorage:
                                       format(HBNB_MYSQL_USER,
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB))
+                                             HBNB_MYSQL_DB),
+                                      pool_pre_ping=True)
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
@@ -97,4 +98,51 @@ class DBStorage:
         This method calls remove() method on the private session attribute.
         It removes the session from the database.
         """
+        self.__session.remove()
+
+    def all(self, cls=None):
+        """Query on the current database session all objects
+        depending on the class name (argument cls)
+        """
+        new_dict = {}
+        if cls:
+            objs = self.__session.query(classes[cls]).all()
+            for obj in objs:
+                key = "{}.{}".format(cls, obj.id)
+                new_dict[key] = obj
+        else:
+            for c in classes.values():
+                objs = self.__session.query(c).all()
+                for obj in objs:
+                    key = "{}.{}".format(type(obj).__name__, obj.id)
+                    new_dict[key] = obj
+        return new_dict
+
+    def new(self, obj):
+        """Add the object to the current database session."""
+        if obj:
+            self.__session.add(obj)
+
+    def save(self):
+        """Commit all changes of the current database session."""
+        self.__session.commit()
+
+    def delete(self, obj=None):
+        """Delete from the current database session."""
+        if obj:
+            self.__session.delete(obj)
+
+    def reload(self):
+        """Reload data from the database."""
+        Base.metadata.create_all(self.__engine)
+        Session = scoped_session(sessionmaker(bind=self.__engine,
+                                              expire_on_commit=False))
+        self.__session = Session()
+
+    def close(self):
+        """Close the session."""
+        self.__session.close()
+    
+    def close(self):
+        """Close the private session attribute."""
         self.__session.remove()
