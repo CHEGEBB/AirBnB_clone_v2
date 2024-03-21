@@ -61,7 +61,8 @@ class TestState(unittest.TestCase):
                         "state.py needs a docstring")
 
     def test_state_class_docstring(self):
-        """This method tests for the presence of a docstring in the State class.
+        """This method tests for the presence
+        of a docstring in the State class.
         It ensures the State class has a docstring.
         """
         self.assertIsNot(State.__doc__, None,
@@ -78,7 +79,7 @@ class TestState(unittest.TestCase):
                          "State class needs a docstring")
         self.assertTrue(len(State.__doc__) >= 1,
                         "State class needs a docstring")
-        
+
     def test_state_func_docstrings(self):
         """This method tests for the presence of docstrings in State methods.
         It ensures the methods of the State class have docstrings.
@@ -88,7 +89,8 @@ class TestState(unittest.TestCase):
                              "{} method needs a docstring".format(func))
             self.assertTrue(len(func.__doc__) >= 1,
                             "{} method needs a docstring".format(func))
-            
+
+
 class TestState(unittest.TestCase):
     """This class contains test cases for the State class
     It includes test cases for the attributes and methods of the State class.
