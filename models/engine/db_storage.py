@@ -4,7 +4,6 @@ This module contains the database storage class.
 The DBStorage class manages the database storage.
 """
 
-r
 from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
