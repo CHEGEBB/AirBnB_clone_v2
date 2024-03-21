@@ -4,14 +4,6 @@ This module contains the test for the console module.
 The test ensures the console module is working as expected.
 """
 
-import unittest
-import pep8
-import inspect
-import console
-from console import HBNBCommand
-import os
-import json
-import sys
 from io import StringIO
 from unittest.mock import patch
 from models import storage
@@ -20,6 +12,14 @@ from models.user import User
 from models.state import State
 from models.city import City
 from models.place import Place
+import unittest
+import pep8
+import inspect
+import console
+from console import HBNBCommand
+import os
+import json
+import sys
 from models.amenity import Amenity
 from models.review import Review
 
@@ -33,7 +33,7 @@ class TestConsoleDocs(unittest.TestCase):
         """This method checks for PEP8 conformance in the console module.
         It ensures the console module conforms to PEP8 standards.
         """
-        result = pep8s.check_files(['console.py'])
+        result = pep8.Checker(['console.py']).check_all()
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -41,8 +41,7 @@ class TestConsoleDocs(unittest.TestCase):
         """This method checks for PEP8 conformance in the test_console.py file.
         It ensures the test_console.py file conforms to PEP8 standards.
         """
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_console.py'])
+        result = pep8.Checker(['tests/test_console.py']).check_all()
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
