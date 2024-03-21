@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 
-"""This is the state module and it contains the State class the State class inherits from the BaseModel class
-The State class represents the state of the place and it contains the state name"""
+"""This is the state module and it contains the State
+class the State class inherits from the BaseModel class
+The State class represents the state of the 
+and it contains the state name
+"""
 
 import uuid
 from datetime import datetime
@@ -37,5 +40,6 @@ class State(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """This is the initialization of the State class
         We use the __init__ method to initialize the State class
-        The __init__ method is a special method in Python that is called when an instance (object) of the class is created"""
+        The __init__ method is a special method in Python
+        that is called when an instance (object) of the class is created"""
         super().__init__(*args, **kwargs)
