@@ -6,7 +6,8 @@ The test cases ensures the State class is working as expected.
 It also ensures the attributes and
 methods of the State class are working as expected.
 """
-
+from sqlalchemy.ext.declarative import declarative_base
+import os
 import unittest
 from models.state import State
 from models.base_model import BaseModel
@@ -15,6 +16,11 @@ import pep8
 from models import state
 import models
 State = State
+
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
+else:
+    Base = object
 
 
 class TestState(unittest.TestCase):

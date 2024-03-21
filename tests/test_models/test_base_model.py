@@ -5,6 +5,7 @@ TestBaseModelDocs: tests for the BaseModel class docstrings
 TestBaseModel: tests for the BaseModel class
 This is the test suite for the BaseModel class.
 """
+from sqlalchemy.ext.declarative import declarative_base
 from uuid import UUID
 import json
 import os
@@ -18,6 +19,11 @@ from unittest import mock
 BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
 
+
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
+else:
+    Base = object
 
 class TestBaseModelDocs(unittest.TestCase):
     """This class contains tests to check the

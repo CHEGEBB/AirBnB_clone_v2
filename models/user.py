@@ -9,6 +9,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import os
+from sqlalchemy.ext.declarative import declarative_base
 
 
 class User(BaseModel, Base):

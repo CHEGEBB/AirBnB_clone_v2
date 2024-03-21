@@ -7,8 +7,8 @@ It makes use of the unittest module to test the
 functionality of the Amenity class.
 """
 
-import unittest
 import os
+from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 import models
 from models import amenity
@@ -18,6 +18,10 @@ import pep8
 from datetime import datetime
 Amenity = amenity.Amenity
 
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
+else:
+    Base = object
 
 class TestAmenity(unittest.TestCase):
     """

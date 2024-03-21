@@ -5,8 +5,9 @@ This module contains tests for the Place class it  tests the Place class
 for expected behavior and documentation
 It tests for the existence of docstrings and adherance to PEP8
 """
-
+from sqlalchemy.ext.declarative import declarative_base
 import inspect
+import os
 import models
 from models import place
 import pep8 as pycodestyle
@@ -16,6 +17,11 @@ from datetime import datetime
 from unittest import mock
 Place = models.place.Place
 module_doc = models.place.__doc__
+
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
+else:
+    Base = object
 
 
 class TestPlaceDocs(unittest.TestCase):
