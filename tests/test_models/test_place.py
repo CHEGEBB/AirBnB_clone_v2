@@ -215,7 +215,7 @@ class TestPlace(unittest.TestCase):
                          place.longitude)
         self.assertEqual(place_json.to_dict()['amenity_ids'],
                          place.amenity_ids)
-        
+
     def test_city_id_attr(self):
         """
         This method checks for the city_id attribute of the Place class
