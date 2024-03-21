@@ -202,19 +202,19 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place_json.to_dict()['description'],
                          place.description)
         self.assertEqual(place_json.to_dict()['number_rooms'],
-                            place.number_rooms)
+                         place.number_rooms)
         self.assertEqual(place_json.to_dict()['number_bathrooms'],
-                            place.number_bathrooms)
+                         place.number_bathrooms)
         self.assertEqual(place_json.to_dict()['max_guest'],
-                            place.max_guest)
+                         place.max_guest)
         self.assertEqual(place_json.to_dict()['price_by_night'],
-                            place.price_by_night)
+                         place.price_by_night)
         self.assertEqual(place_json.to_dict()['latitude'],
-                            place.latitude)
+                         place.latitude)
         self.assertEqual(place_json.to_dict()['longitude'],
-                            place.longitude)
+                         place.longitude)
         self.assertEqual(place_json.to_dict()['amenity_ids'],
-                            place.amenity_ids)
+                         place.amenity_ids)
         
     def test_city_id_attr(self):
         """
