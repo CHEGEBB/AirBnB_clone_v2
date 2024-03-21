@@ -17,6 +17,7 @@ from unittest import mock
 Place = models.place.Place
 module_doc = models.place.__doc__
 
+
 class TestPlaceDocs(unittest.TestCase):
     """This class tests for Place documentation and style
     It tests for the existence of classes, methods and
@@ -70,7 +71,8 @@ class TestPlaceDocs(unittest.TestCase):
                                 "{} method needs a docstring".format(func[0]))
                 self.assertTrue(len(func[1].__doc__) >= 1,
                                 "{} method needs a docstring".format(func[0]))
-                
+
+
 class TestPlace(unittest.TestCase):
 
     def test_is_subclass(self):
