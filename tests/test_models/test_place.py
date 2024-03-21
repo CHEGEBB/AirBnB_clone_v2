@@ -44,7 +44,8 @@ class TestPlaceDocs(unittest.TestCase):
 
     def test_module_docstring(self):
         """This method checks for the existence of module docstring
-        It checks for the presence of a docstring in the module"""
+        It checks for the presence of a docstring in the module
+        """
         self.assertIsNot(module_doc, None,
                         "place.py needs a docstring")
         self.assertTrue(len(module_doc) > 1,
