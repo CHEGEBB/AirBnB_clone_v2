@@ -7,6 +7,7 @@ The State class represents the state of the
 and it contains the state name
 """
 
+from models.city import City
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
 from datetime import datetime
@@ -19,9 +20,6 @@ import os
 class State(BaseModel, Base):
     """This is the State class it represents the state of the place
     The State class inherits from the BaseModel class"""
-
-    # Import City class here to avoid circular import issues
-    from models.city import City
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'states'
@@ -59,3 +57,4 @@ class State(BaseModel, Base):
         that is called when an instance (object) of the class is created
         """
         super().__init__(*args, **kwargs)
+        
