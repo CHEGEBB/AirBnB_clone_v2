@@ -20,10 +20,8 @@ else:
     Base = object
 
 
-
 class BaseModel:
-    """
-    This is the BaseModel class it  acts as the base
+    """This is the BaseModel class it  acts as the base
     class for all other classes in the project
     It is the foundation of the project
     """
