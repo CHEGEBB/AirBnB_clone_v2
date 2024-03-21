@@ -1,7 +1,10 @@
 #!/usr/bin/python
 
-"""This is the review module and it contains the Review class the Review class inherits from the BaseModel class
-The Review class represents the review of the place and it contains the review text and the user id"""
+"""This is the review module and it contains the Review class
+the Review class inherits from the BaseModel class
+The Review class represents the review of the place
+and it contains the review text and the user id
+"""
 
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
@@ -27,5 +30,6 @@ class Review(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """This is the initialization of the Review class
         We use the __init__ method to initialize the Review class
-        The __init__ method is a special method in Python that is called when an instance (object) of the class is created"""
+        The __init__ method is a special method in Python
+        that is called when an instance (object) of the class is created"""
         super().__init__(*args, **kwargs)
