@@ -65,7 +65,7 @@ class TestPlaceDocs(unittest.TestCase):
         for func in self.place_funcs:
             with self.subTest(func=func):
                 self.assertIsNot(func[1].__doc__, None,
-                                "{} method needs a docstring".format(func[0]))
+                                 "{} method needs a docstring".format(func[0]))
                 self.assertTrue(len(func[1].__doc__) >= 1,
                                 "{} method needs a docstring".format(func[0]))
 
@@ -187,21 +187,20 @@ class TestPlace(unittest.TestCase):
         place_dict = place.to_dict()
         place_json = Place(**place_dict)
         self.assertEqual(place_json.name, "House")
-        self.assertEqual(place_json.__class__.__name__,
-                            "Place")
+        self.assertEqual(place_json.__class__.__name__, "Place")
         self.assertIsInstance(place_json, Place)
         self.assertEqual(place_json.to_dict()['name'], "House")
         self.assertEqual(place_json.to_dict()['id'], place.id)
         self.assertEqual(place_json.to_dict()['created_at'],
-                            place.created_at.isoformat())
+                         place.created_at.isoformat())
         self.assertEqual(place_json.to_dict()['updated_at'],
-                            place.updated_at.isoformat())
+                         place.updated_at.isoformat())
         self.assertEqual(place_json.to_dict()['__class__'],
-                            "Place")
+                         "Place")
         self.assertEqual(place_json.to_dict()['city_id'], place.city_id)
         self.assertEqual(place_json.to_dict()['user_id'], place.user_id)
         self.assertEqual(place_json.to_dict()['description'],
-                            place.description)
+                         place.description)
         self.assertEqual(place_json.to_dict()['number_rooms'],
                             place.number_rooms)
         self.assertEqual(place_json.to_dict()['number_bathrooms'],
