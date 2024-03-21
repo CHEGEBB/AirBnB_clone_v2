@@ -9,7 +9,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from models.amenity import Amenity
 from models.base_model import Base
-from models.state import State
 from models.user import User
 from models.city import City
 from models.place import Place
@@ -54,6 +53,7 @@ class DBStorage:
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
+                from models.state import State  # Local import
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
@@ -106,12 +106,14 @@ class DBStorage:
         """
         new_dict = {}
         if cls:
+            from models.state import State  # Local import
             objs = self.__session.query(classes[cls]).all()
             for obj in objs:
                 key = "{}.{}".format(cls, obj.id)
                 new_dict[key] = obj
         else:
             for c in classes.values():
+                from models.state import State  # Local import
                 objs = self.__session.query(c).all()
                 for obj in objs:
                     key = "{}.{}".format(type(obj).__name__, obj.id)
