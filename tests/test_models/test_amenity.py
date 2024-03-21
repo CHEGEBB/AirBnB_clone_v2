@@ -83,11 +83,6 @@ class TestAmenity(unittest.TestCase):
             self.assertTrue(len(func.__doc__) >= 1,
                             "{:s} method needs a docstring".format(func))
 
-class TestAmenity(unittest.TestCase):
-    """The TestAmenity class defines the test suite for the Amenity class.
-    It makes use of the unittest module to test the functionality of the Amenity class.
-    It defines a series of test cases that test the functionality of the Amenity class.
-    """
     def test_is_subclass(self):
         """The test_is_subclass tests that Amenity is a subclass of BaseModel.
         It checks if the Amenity class is a subclass of the BaseModel class.
@@ -114,7 +109,7 @@ class TestAmenity(unittest.TestCase):
         new_d = am.to_dict()
         self.assertEqual(type(new_d), dict)
         for attr in am.__dict__:
-            if attr is not 'updated_at' and attr is not 'created_at':
+            if attr != 'updated_at' and attr != 'created_at':
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
