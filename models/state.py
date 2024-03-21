@@ -5,11 +5,14 @@ from models.base_model import BaseModel, Base
 from models.city import City
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import os
+from sqlalchemy.ext.declarative import declarative_base
 
 
 class State(BaseModel, Base):
     """Representation of state """
-    if models.storage_t == "db":
+
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state")
