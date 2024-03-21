@@ -74,7 +74,7 @@ class TestAmenity(unittest.TestCase):
                         "amenity.py needs a docstring")
 
     def test_amenity_class_docstring(self):
-        """The test_amenity_class_docstring 
+        """The test_amenity_class_docstring
         tests the Amenity class for a docstring.
         It checks if the Amenity class has a docstring.
         """
@@ -84,7 +84,7 @@ class TestAmenity(unittest.TestCase):
                         "Amenity class needs a docstring")
 
     def test_amenity_func_docstrings(self):
-        """The test_amenity_func_docstrings 
+        """The test_amenity_func_docstrings
         tests the presence of docstrings in Amenity methods.
         It checks if all the methods of the Amenity class have docstrings.
         """
@@ -105,7 +105,8 @@ class TestAmenity(unittest.TestCase):
         self.assertTrue(hasattr(amenity, "updated_at"))
 
     def test_name_attr(self):
-        """The test_name_attr tests that the name attribute of Amenity is a string.
+        """
+        The test_name_attr tests that the name attribute of Amenity is a string.
         It checks if the name attribute of the Amenity class is a string.
         """
         amenity = Amenity()
