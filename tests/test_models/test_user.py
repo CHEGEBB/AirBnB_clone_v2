@@ -53,7 +53,8 @@ class TestUserDocs(unittest.TestCase):
 
     def test_user_module_docstring(self):
         """
-        This method tests for the presence of a docstring in the user.py module.
+        This method tests for the presence
+        of a docstring in the user.py module.
         It ensures the user.py module has a docstring.
         """
         self.assertIsNot(user.__doc__, None,
