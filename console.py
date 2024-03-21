@@ -76,7 +76,8 @@ class HBNBCommand(cmd.Cmd):
         print(instance.id)
 
     def do_show(self, line):
-        """Prints the string representation of an instance based on the class name and id"""
+        """Prints the string representation of an
+        instance based on the class name and id"""
         args = line.split()
         if len(args) < 2:
             print("** class name missing **")
@@ -118,7 +119,8 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_all(self, line):
-        """Prints all string representation of all instances based or not on the class name"""
+        """Prints all string representation of all instances
+        based or not on the class name"""
         args = line.split()
         if len(args) == 0:
             print([str(obj) for obj in storage.all().values()])
@@ -130,7 +132,8 @@ class HBNBCommand(cmd.Cmd):
         print([str(obj) for key, obj in storage.all().items() if key.startswith(class_name + '.')])
 
     def do_update(self, line):
-        """Updates an instance based on the class name and id by adding or updating attribute
+        """Updates an instance based on 
+        the class name and id by adding or updating attribute
         (save the change into the JSON file)"""
         args = shlex.split(line)
         if len(args) < 3:
