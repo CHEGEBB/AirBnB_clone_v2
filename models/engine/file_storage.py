@@ -5,7 +5,6 @@ The FileStorage class manages the file storage.
 """
 import json
 from os import path
-from models.state import State
 from models.city import City
 from models.place import Place
 from models.amenity import Amenity
@@ -13,9 +12,9 @@ from models.review import Review
 from models.base_model import BaseModel
 from models.user import User
 
-classes = {"BaseModel": BaseModel, "User": User, "State": State,
-           "City": City, "Place": Place, "Amenity": Amenity,
-           "Review": Review}
+# Remove the import of State from here
+
+classes = {"BaseModel": BaseModel, "User": User, "City": City, "Place": Place, "Amenity": Amenity, "Review": Review}
 
 class FileStorage:
     """This class interacts with the JSON file system
@@ -68,8 +67,9 @@ class FileStorage:
                 new_dict = json.load(f)
             for key, value in new_dict.items():
                 cls = value['__class__']
-                obj = classes[cls](**value)
-                self.__objects[key] = obj
+                if cls in classes:
+                    obj = classes[cls](**value)
+                    self.__objects[key] = obj
 
     def delete(self, obj=None):
         """This method deletes an object from the current database session
