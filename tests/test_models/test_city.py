@@ -65,7 +65,8 @@ class TestCityDocs(unittest.TestCase):
     def test_func_docstrings(self):
         """
         This method checks for the presence of docstrings in City methods
-        It checks for the presence of docstrings in all the methods of the class
+        It checks for the presence of docstrings
+        in all the methods of the class
         The docstrings should be present and of a certain length
         """
         for func in self.city_funcs:
@@ -106,7 +107,8 @@ class TestCity(unittest.TestCase):
                          "<class 'models.city.City'>")
         self.assertEqual(my_city.__class__.__name__, "City")
         self.assertTrue(issubclass(my_city.__class__, City))
-        self.assertTrue(issubclass(my_city.__class__, models.base_model.BaseModel))
+        self.assertTrue(issubclass(my_city.__class__,
+                                   models.base_model.BaseModel))
 
     def test_is_subclass(self):
         """
