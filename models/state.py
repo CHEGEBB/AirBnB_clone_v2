@@ -1,18 +1,37 @@
-import os
+#!/usr/bin/python3
+
+"""This is the init file of the models module it contains the storage instance
+The storage instance is a FileStorage instance
+It is a dictionary that holds all the instances of the classes
+"""
+
+from os import getenv
+from models.engine.file_storage import FileStorage
+from models.engine.db_storage import DBStorage
 import models
-from models.base_model import BaseModel, Base
 from models.city import City
+from models.state import State
+from models.user import User
+from models.place import Place
+from models.review import Review
+from models.amenity import Amenity
+from models.base_model import BaseModel
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 
-if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-    Base = declarative_base()
+if getenv('HBNB_TYPE_STORAGE') == 'db':
+    storage = DBStorage()
+    storage.reload()
+else:
+    storage = FileStorage()
+    storage.reload()
 
-class State(BaseModel, Base):
-    """Representation of state """
-
-    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+class state:
+    """This is the state class
+    The state class inherits from the BaseModel class
+    """
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state")
@@ -23,12 +42,12 @@ class State(BaseModel, Base):
         """initializes state"""
         super().__init__(*args, **kwargs)
 
-    if os.getenv('HBNB_TYPE_STORAGE') != 'db':
+    if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):
             """getter for list of city instances related to the state"""
             city_list = []
-            all_cities = models.storage.all(City)
+            all_cities = storage.all(City)
             for city in all_cities.values():
                 if city.state_id == self.id:
                     city_list.append(city)
