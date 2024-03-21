@@ -6,6 +6,7 @@ The test ensures the console module is working as expected.
 
 from io import StringIO
 from sqlalchemy.ext.declarative import declarative_base
+import os
 from unittest.mock import patch
 from models import storage
 from models.base_model import BaseModel
@@ -18,7 +19,6 @@ import pep8
 import inspect
 import console
 from console import HBNBCommand
-import os
 import json
 import sys
 from models.amenity import Amenity
