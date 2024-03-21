@@ -14,9 +14,11 @@ from models.amenity import Amenity
 if os.getenv('HBNB_TYPE_STORAGE') == 'db':
     Base = declarative_base()
     place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id', String(60), ForeignKey('places.id'),
+                          Column('place_id', String(60),
+                                 ForeignKey('places.id'),
                                  primary_key=True, nullable=False),
-                          Column('amenity_id', String(60), ForeignKey('amenities.id'),
+                          Column('amenity_id', String(60),
+                                 ForeignKey('amenities.id'),
                                  primary_key=True, nullable=False))
 else:
     Base = BaseModel
