@@ -6,13 +6,12 @@ It defines the attributes of the User class.
 It also contains the User class methods.
 """
 
-from models.base_model import BaseModel
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 import os
 from sqlalchemy import Integer
-
+from models.base_model import BaseModel
+from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
