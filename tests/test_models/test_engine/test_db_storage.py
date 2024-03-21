@@ -100,25 +100,25 @@ class TestFileStorage(unittest.TestCase):
     This class contains tests for the FileStorage class
     The tests will make sure that the FileStorage class is working as expected
     """
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.os.getenv(HBNB_TYPE_STORAGE) == 'db' != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """The all method should return a dictionary
         This test checks to make sure that the all method returns a dictionary"""
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.os.getenv(HBNB_TYPE_STORAGE) == 'db' != 'db', "not testing db storage")
     def test_all_no_class(self):
         """This is a test for the all method
         This test checks to make sure that the all method returns all instances of a given class
         """
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.os.getenv(HBNB_TYPE_STORAGE) == 'db' != 'db', "not testing db storage")
     def test_new(self):
         """This is a test for the new method
         This test checks to make sure that the new method adds a new instance to the session
         """
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.os.getenv(HBNB_TYPE_STORAGE) == 'db' != 'db', "not testing db storage")
     def test_save(self):
         """This is a test for the save method
         This test checks to make sure that the save method saves the session to the database

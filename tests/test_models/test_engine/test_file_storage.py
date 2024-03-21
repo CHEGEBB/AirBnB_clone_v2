@@ -91,7 +91,7 @@ class TestFileStorage(unittest.TestCase):
     This class contains test cases for the FileStorage class in the file_storage module.
     It includes test cases for the FileStorage class methods.
     """
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """This method tests that all returns the FileStorage.__objects attr.
         It ensures that the all method returns the FileStorage.__objects attribute.
@@ -101,7 +101,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db', "not testing file storage")
     def test_new(self):
         """This method tests that new adds an object to the FileStorage.__objects attr.
         It ensures that the new method adds an object to the FileStorage.__objects attribute.
@@ -119,7 +119,7 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db', "not testing file storage")
     def test_save(self):
         """This method tests that save properly saves objects to file.json.
         It ensures that the save method properly saves objects to the file.json file.

@@ -129,7 +129,7 @@ class TestCity(unittest.TestCase):
         """
         city = City()
         self.assertTrue(hasattr(city, "name"))
-        if models.storage_t == 'db':
+        if models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db':
             self.assertEqual(city.name, None)
         else:
             self.assertEqual(city.name, "")
@@ -142,7 +142,7 @@ class TestCity(unittest.TestCase):
         """
         city = City()
         self.assertTrue(hasattr(city, "state_id"))
-        if models.storage_t == 'db':
+        if models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db':
             self.assertEqual(city.state_id, None)
         else:
             self.assertEqual(city.state_id, "")

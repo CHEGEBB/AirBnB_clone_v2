@@ -105,7 +105,7 @@ class TestReview(unittest.TestCase):
         """
         review = Review()
         self.assertTrue(hasattr(review, "place_id"))
-        if models.storage_t == 'db':
+        if models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db':
             self.assertEqual(review.place_id, None)
         else:
             self.assertEqual(review.place_id, "")
@@ -121,7 +121,7 @@ class TestReview(unittest.TestCase):
         """
         review = Review()
         self.assertTrue(hasattr(review, "user_id"))
-        if models.storage_t == 'db':
+        if models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db':
             self.assertEqual(review.user_id, None)
         else:
             self.assertEqual(review.user_id, "")
@@ -137,7 +137,7 @@ class TestReview(unittest.TestCase):
         """
         review = Review()
         self.assertTrue(hasattr(review, "text"))
-        if models.storage_t == 'db':
+        if models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db':
             self.assertEqual(review.text, None)
         else:
             self.assertEqual(review.text, "")
