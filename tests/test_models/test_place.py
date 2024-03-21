@@ -47,15 +47,15 @@ class TestPlaceDocs(unittest.TestCase):
         """This method checks for the existence of module docstring
         It checks for the presence of a docstring in the module
         """
-        self.assertIsNot(module_doc, None,"place.py needs a docstring")
-        self.assertTrue(len(module_doc) > 1,"place.py needs a docstring")
+        self.assertIsNot(module_doc, None, "place.py needs a docstring")
+        self.assertTrue(len(module_doc) > 1, "place.py needs a docstring")
 
     def test_class_docstring(self):
         """This method checks for the existence of docstrings in Place class
         It checks for the presence of a docstring in the Place class
         """
-        self.assertIsNot(Place.__doc__, None,"Place class needs a docstring")
-        self.assertTrue(len(Place.__doc__) >= 1,"Place class needs a docstring")
+        self.assertIsNot(Place.__doc__, None, "Place class needs a docstring")
+        self.assertTrue(len(Place.__doc__) >= 1, "Place class needs a docstring")
 
     def test_func_docstrings(self):
         """This method checks for the existence of docstrings in Place methods
