@@ -31,7 +31,7 @@ class User(BaseModel, Base):
         last_name = ""
 
     def __init__(self, *args, **kwargs):
-        """This is the __init__ method. 
+        """This is the __init__ method.
         It initializes the User class.
         It also checks the environment variable for the type of storage.
         """
