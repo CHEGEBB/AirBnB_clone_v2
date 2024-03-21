@@ -18,7 +18,7 @@ import cmd
 import shlex
 
 classes = {"BaseModel": BaseModel, "User": User, "State": State,
-              "City": City, "Place": Place, "Amenity": Amenity, "Review": Review}
+           "City": City, "Place": Place, "Amenity": Amenity, "Review": Review}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -124,32 +124,43 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """Called on an input line when the command prefix is not recognized"""
+        print("Received command:", line)
         args = line.split(".")
+        print("Split arguments:", args)
         if len(args) == 2:
-            if args[0] in classes and args[1] == "all()":
-                self.do_all(args[0])
-            elif args[0] in classes and args[1] == "count()":
-                count = 0
-                all_objs = storage.all()
-                for obj in all_objs:
-                    if obj.split(".")[0] == args[0]:
-                        count += 1
-                print(count)
-            elif args[0] in classes and args[1].startswith("show(") and args[1].endswith(")"):
-                id = args[1][args[1].find("(")+1:args[1].find(")")]
-                self.do_show(args[0] + " " + id)
-            elif args[0] in classes and args[1].startswith("destroy(") and args[1].endswith(")"):
-                id = args[1][args[1].find("(")+1:args[1].find(")")]
-                self.do_destroy(args[0] + " " + id)
-            elif args[0] in classes and args[1].startswith("update(") and args[1].endswith(")"):
-                id = args[1][args[1].find("(")+1:args[1].find(")")]
-                args = args[1][args[1].find(")")+2:]
-                args = args.replace(",", "")
-                self.do_update(args[0] + " " + id + " " + args)
+            if args[0] in classes:
+                if args[1] == "all()":
+                    print("Executing do_all with class:", args[0])
+                    self.do_all(args[0])
+                elif args[1] == "count()":
+                    print("Executing count() with class:", args[0])
+                    count = 0
+                    all_objs = storage.all()
+                    for obj in all_objs:
+                        if obj.split(".")[0] == args[0]:
+                            count += 1
+                    print(count)
+                elif args[1].startswith("show(") and args[1].endswith(")"):
+                    id = args[1][args[1].find("(")+1:args[1].find(")")]
+                    print("Executing show() with class:", args[0], "and id:", id)
+                    self.do_show(args[0] + " " + id)
+                elif args[1].startswith("destroy(") and args[1].endswith(")"):
+                    id = args[1][args[1].find("(")+1:args[1].find(")")]
+                    print("Executing destroy() with class:", args[0], "and id:", id)
+                    self.do_destroy(args[0] + " " + id)
+                elif args[1].startswith("update(") and args[1].endswith(")"):
+                    id = args[1][args[1].find("(")+1:args[1].find(")")]
+                    args = args[1][args[1].find(")")+2:]
+                    args = args.replace(",", "")
+                    print("Executing update() with class:", args[0], "and id:", id, "and args:", args)
+                    self.do_update(args[0] + " " + id + " " + args)
+                else:
+                    print("*** Unknown syntax: {}".format(line))
             else:
-                print("*** Unknown syntax: {}".format(line))
+                print("** class doesn't exist **")
         else:
             print("*** Unknown syntax: {}".format(line))
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
