@@ -14,15 +14,16 @@ from models.base_model import BaseModel
 from models.user import User
 
 classes = {"BaseModel": BaseModel, "User": User, "State": State,
-              "City": City, "Place": Place, "Amenity": Amenity,
-              "Review": Review}
+           "City": City, "Place": Place, "Amenity": Amenity,
+           "Review": Review}
+
 
 class FileStorage:
     """This class interacts with the JSON file system
     This class interacts with the JSON file system.
-    The FileStorage class manages the
-    JSON file storage for the application.
+    The FileStorage class manages the JSON file storage for the application.
     """
+
     __file_path = "file.json"
     __objects = {}
 
@@ -35,7 +36,7 @@ class FileStorage:
             return self.__objects
         new_dict = {}
         for key, value in self.__objects.items():
-            if value.__class__ == cls:
+            if isinstance(value, cls):
                 new_dict[key] = value
         return new_dict
 
@@ -69,8 +70,7 @@ class FileStorage:
             for key, value in new_dict.items():
                 cls = value['__class__']
                 obj = classes[cls](**value)
-                self.__objects[key] = obj   
-
+                self.__objects[key] = obj
 
     def delete(self, obj=None):
         """This method deletes an object from the current database session
