@@ -14,7 +14,8 @@ from os import getenv
 class City(BaseModel, Base):
 
     """This is the City class it represents the city of the place
-    The City class inherits from the BaseModel class"""
+    The City class inherits from the BaseModel class
+    """
 
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'cities'
@@ -39,5 +40,6 @@ class City(BaseModel, Base):
         """This is the initialization of the City class
         We use the __init__ method to initialize the City class
         The __init__ method is a special method in Python that is called
-        when an instance (object) of the class is created"""
+        when an instance (object) of the class is created
+        """
         super().__init__(*args, **kwargs)
