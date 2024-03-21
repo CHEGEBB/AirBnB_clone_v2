@@ -10,6 +10,8 @@ from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
 from models.review import Review
 from models.amenity import Amenity
+from sqlalchemy.ext.declarative import declarative_base
+
 
 if os.getenv('HBNB_TYPE_STORAGE') == 'db':
     Base = declarative_base()
