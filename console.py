@@ -133,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
                storage.all().items() if key.startswith(class_name + '.')])
 
     def do_update(self, line):
-        """Updates an instance based on 
+        """Updates an instance based on
         the class name and id by adding or updating attribute
         (save the change into the JSON file)
         """
