@@ -1,33 +1,32 @@
 #!/usr/bin/python3
 
 """
-This module contains tests for the City class it  tests the City class
+This module contains tests for the City class it tests the City class
 for expected behavior and documentation
-It tests for the existence of docstrings and adherance to PEP8
+It tests for the existence of docstrings and adherence to PEP8
 """
 
 from sqlalchemy.ext.declarative import declarative_base
 import os
 import inspect
-import models
 import pep8 as pycodestyle
 import unittest
+from models.city import City
 from models.base_model import BaseModel
 from datetime import datetime
-City = models.city.City
-module_doc = models.city.__doc__
 
 if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    from models.engine.db_storage import DBStorage
     Base = declarative_base()
 else:
+    from models.engine.file_storage import FileStorage
     Base = object
-
 
 
 class TestCityDocs(unittest.TestCase):
     """
     This class tests for City documentation and style
-    It tests for the existence of classes, methods and
+    It tests for the existence of classes, methods, and
     functions docstrings and adherence to PEP8
     """
 
@@ -56,9 +55,9 @@ class TestCityDocs(unittest.TestCase):
         This method checks for the existence of module docstring
         It checks for the presence of a docstring in the module
         """
-        self.assertIsNot(module_doc, None,
+        self.assertIsNot(City.__doc__, None,
                          "city.py needs a docstring")
-        self.assertTrue(len(module_doc) > 1,
+        self.assertTrue(len(City.__doc__) > 1,
                         "city.py needs a docstring")
 
     def test_class_docstring(self):
@@ -117,7 +116,7 @@ class TestCity(unittest.TestCase):
         self.assertEqual(my_city.__class__.__name__, "City")
         self.assertTrue(issubclass(my_city.__class__, City))
         self.assertTrue(issubclass(my_city.__class__,
-                                   models.base_model.BaseModel))
+                                   BaseModel))
 
     def test_is_subclass(self):
         """
@@ -138,7 +137,7 @@ class TestCity(unittest.TestCase):
         """
         city = City()
         self.assertTrue(hasattr(city, "name"))
-        if models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db':
+        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
             self.assertEqual(city.name, None)
         else:
             self.assertEqual(city.name, "")
@@ -151,7 +150,7 @@ class TestCity(unittest.TestCase):
         """
         city = City()
         self.assertTrue(hasattr(city, "state_id"))
-        if models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db':
+        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
             self.assertEqual(city.state_id, None)
         else:
             self.assertEqual(city.state_id, "")
@@ -160,7 +159,7 @@ class TestCity(unittest.TestCase):
         """
         This method checks for the to_dict method of the City class
         It checks if the output is as expected
-        The to_dict method should return a dictionary with key value pairs
+        The to_dict method should return a dictionary with key-value pairs
         """
         c = City()
         new_d = c.to_dict()
@@ -175,7 +174,7 @@ class TestCity(unittest.TestCase):
         """
         This method checks for the to_dict method of the City class
         It checks if the output is as expected
-        The to_dict method should return a dictionary with key value pairs
+        The to_dict method should return a dictionary with key-value pairs
         """
         c = City()
         new_d = c.to_dict()
