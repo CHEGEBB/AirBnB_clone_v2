@@ -2,7 +2,8 @@
 
 """This is the base model module and it contains the BaseModel
  class the amenity class inherits from this class
- It also contains the Base class that links to the amenities table in the database
+ It also contains the Base class that links to the
+ amenities table in the database
  """
 
 import uuid
@@ -21,7 +22,8 @@ else:
 
 
 class BaseModel:
-    """This is the BaseModel class it  acts as the base
+    """
+    This is the BaseModel class it  acts as the base
     class for all other classes in the project
     It is the foundation of the project
     """
@@ -34,8 +36,6 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """This is the initialization of the BaseModel class
-        We use the __init__ method to initialize the BaseModel class
-        The __init__ method is a special method in Python that is called
           when an instance (object) of the class is created
           """
 
@@ -58,16 +58,20 @@ class BaseModel:
 
     def __str__(self):
         """This is the string representation of the BaseModel class
-        We use the __str__ method to return a string representation of the BaseModel class
-        The __str__ method is a special method in Python that is called by the
+        We use the __str__ method to return a
+        string representation of the BaseModel class
+        The __str__ method is a special method
+        in Python that is called by the
          print() function
         """
 
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
     
     def save(self):
-        """This saves the BaseModel instance to the storage using the storage instance
-        We use the save method to save the BaseModel instance to the storage
+        """This saves the BaseModel instance
+        to the storage using the storage instance
+        We use the save method to save
+        the BaseModel instance to the storage
           using the storage instance
           """
         self.updated_at = datetime.now()
