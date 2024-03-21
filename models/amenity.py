@@ -18,7 +18,7 @@ import models
 
 class Amenity(BaseModel, Base):
 
-    """Representation of Amenity 
+    """Representation of Amenity
     Attributes:
         __tablename__ (str): The name of the table
         name (sqlalchemy string): The name of the amenity
