@@ -5,7 +5,7 @@ The test ensures the console module is working as expected.
 """
 
 from io import StringIO
-from sqlachemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import declarative_base
 from unittest.mock import patch
 from models import storage
 from models.base_model import BaseModel
