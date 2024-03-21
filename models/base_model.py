@@ -65,8 +65,7 @@ class BaseModel:
         """
 
         return "[{}] ({}) {}".format(self.__class__.__name__,
-                                     self.id, self.__dict__)
-    
+                                     self.id, self.__dict__) 
     def save(self):
         """This saves the BaseModel instance
         to the storage using the storage instance
@@ -79,7 +78,7 @@ class BaseModel:
         models.storage.save()
     
     def __repr__(self) -> str:
-        """returns 
+        """returns
         """
         return self.__str__()
 
