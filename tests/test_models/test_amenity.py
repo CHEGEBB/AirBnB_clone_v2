@@ -106,7 +106,8 @@ class TestAmenity(unittest.TestCase):
 
     def test_name_attr(self):
         """
-        The test_name_attr tests that the name attribute of Amenity is a string.
+        The test_name_attr tests that the name attribute
+        of Amenity is a string.
         It checks if the name attribute of the Amenity class is a string.
         """
         amenity = Amenity()
@@ -114,7 +115,7 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(amenity.name, "")
 
     def test_to_dict_creates_dict(self):
-        """The test_to_dict_creates_dict tests 
+        """The test_to_dict_creates_dict tests
         that the to_dict method creates a dictionary with proper attributes.
         It checks if the to_dict method creates a dictionary with proper attributes.
         """
