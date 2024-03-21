@@ -117,7 +117,8 @@ class TestAmenity(unittest.TestCase):
     def test_to_dict_creates_dict(self):
         """The test_to_dict_creates_dict tests
         that the to_dict method creates a dictionary with proper attributes.
-        It checks if the to_dict method creates a dictionary with proper attributes.
+        It checks if the to_dict method creates a dictionary
+        with proper attributes.
         """
         am = Amenity()
         new_d = am.to_dict()
@@ -130,8 +131,10 @@ class TestAmenity(unittest.TestCase):
     def test_to_dict_values(self):
         """The test_to_dict_values tests that the
         values in the dictionary returned from to_dict are correct.
-        It checks if the values in the dictionary returned from to_dict are correct.
-        The test checks if the values in the dictionary are of the correct type.
+        It checks if the values in the dictionary returned
+        from to_dict are correct.
+        The test checks if the values in the dictionary
+        are of the correct type.
         """
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
         am = Amenity()
