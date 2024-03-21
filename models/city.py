@@ -34,7 +34,7 @@ class City(BaseModel, Base):
                 if place.city_id == self.id:
                     place_list.append(place)
             return place_list
-        
+
     def __init__(self, *args, **kwargs):
         """This is the initialization of the City class
         We use the __init__ method to initialize the City class
