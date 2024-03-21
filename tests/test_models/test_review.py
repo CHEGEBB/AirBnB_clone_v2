@@ -6,7 +6,8 @@ The test cases ensure the Review class is working as expected.
 It also ensures the attributes and methods
 of the Review class are working as expected.
 """
-
+from sqlalchemy.ext.declarative import declarative_base
+import os
 import unittest
 import datetime
 from models.review import Review
@@ -18,7 +19,11 @@ import models
 
 Review = Review
 
-
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
+else:
+    Base = object
+    
 class TestReview(unittest.TestCase):
     """
     This class contains test cases for the Review class.
