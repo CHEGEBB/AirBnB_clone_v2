@@ -1,17 +1,20 @@
 #!/usr/bin/python3
-"""
-Fabric script based on the file 1-pack_web_static.py that distributes an
-archive to the web servers
-"""
 
-from fabric.api import put, run, env
-from os.path import exists
+"""This Fabric script based on the file 1-pack_web_static.py that distributes an
+archive to the web servers
+it uses the fabric module to run commands on the server
+"""
+from os.path import isfile
+from fabric.api import env, put, run
 env.hosts = ['34.202.234.181', '54.173.84.105']
 
 
 def do_deploy(archive_path):
-    """distributes an archive to the web servers"""
-    if exists(archive_path) is False:
+    """This function distributes an archive to the web servers
+    it uses the fabric module to run commands on the server
+    The function returns False if the file at the path archive_path doesn't exist
+    """
+    if isfile(archive_path) is False:
         return False
     try:
         file_n = archive_path.split("/")[-1]
