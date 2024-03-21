@@ -15,7 +15,7 @@ from models.place import Place
 from models.review import Review
 
 classes = {"Amenity": Amenity, "City": City,
-              "Place": Place, "Review": Review, "State": State, "User": User}
+           "Place": Place, "Review": Review, "State": None, "User": User}
 
 class DBStorage:
     """This class interacts with the MySQL database
@@ -53,8 +53,11 @@ class DBStorage:
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
-                from models.state import State  # Local import
-                objs = self.__session.query(classes[clss]).all()
+                if clss == "State":
+                    from models.state import State
+                    objs = self.__session.query(State).all()
+                else:
+                    objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
@@ -106,18 +109,21 @@ class DBStorage:
         """
         new_dict = {}
         if cls:
-            from models.state import State  # Local import
-            objs = self.__session.query(classes[cls]).all()
+            if cls == "State":
+                from models.state import State
+                objs = self.__session.query(State).all()
+            else:
+                objs = self.__session.query(classes[cls]).all()
             for obj in objs:
                 key = "{}.{}".format(cls, obj.id)
                 new_dict[key] = obj
         else:
             for c in classes.values():
-                from models.state import State  # Local import
-                objs = self.__session.query(c).all()
-                for obj in objs:
-                    key = "{}.{}".format(type(obj).__name__, obj.id)
-                    new_dict[key] = obj
+                if c is not None:
+                    objs = self.__session.query(c).all()
+                    for obj in objs:
+                        key = "{}.{}".format(type(obj).__name__, obj.id)
+                        new_dict[key] = obj
         return new_dict
 
     def new(self, obj):
