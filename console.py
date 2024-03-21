@@ -1,3 +1,10 @@
+#!/usr/bin/python3
+
+"""This is the console module
+It is the entry point of the command interpreter
+The console is a command interpreter to manage the HBnB data
+"""
+
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
