@@ -26,7 +26,8 @@ from models.review import Review
 
 class TestConsoleDocs(unittest.TestCase):
     """This class contains test cases for the console module
-    This class contains test cases for the console module in the console module.
+    This class contains test cases for the
+    console module in the console module.
     It includes test cases for the console module documentation and style.
     """
     def test_pep8_conformance_console(self):
