@@ -37,5 +37,5 @@ class City(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """This is the initialization of the City class
         We use the __init__ method to initialize the City class
-        The __init__ method is a special method in Python that is called when an instance (object) of the class is created"""
+        The __init__ method is a special method in Python that is called whenn an instance (object) of the class is created"""
         super().__init__(*args, **kwargs)
