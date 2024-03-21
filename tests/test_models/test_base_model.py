@@ -19,14 +19,17 @@ BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
 
 class TestBaseModelDocs(unittest.TestCase):
-    """This class contains tests to check the documentation and style of BaseModel class
+    """This class contains tests to check the
+    documentation and style of BaseModel class
     It is a subclass of unittest.TestCase.
-    What it does is to check the documentation and style of BaseModel class.
+    What it does is to check the documentation
+    and style of BaseModel class.
     """
     @classmethod
     def setUpClass(self):
         """Set up for docstring tests
-        This method is used to set up the docstring tests for the BaseModel class.
+        This method is used to set up the
+        docstring tests for the BaseModel class.
         """
         self.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)
 
@@ -42,7 +45,8 @@ class TestBaseModelDocs(unittest.TestCase):
 
     def test_module_docstring(self):
         """Test for the existence of module docstring
-        This method is used to test for the existence of module docstring in the BaseModel class.
+        This method is used to test for the existence
+        of module docstring in the BaseModel class.
         """
         self.assertIsNot(module_doc, None,
                          "base_model.py needs a docstring")
@@ -51,7 +55,8 @@ class TestBaseModelDocs(unittest.TestCase):
 
     def test_class_docstring(self):
         """Test for the BaseModel class docstring
-        This method is used to test for the existence of docstring in the BaseModel class.
+        This method is used to test for the existence
+        of docstring in the BaseModel class.
         """
         self.assertIsNot(BaseModel.__doc__, None,
                          "BaseModel class needs a docstring")
@@ -60,7 +65,8 @@ class TestBaseModelDocs(unittest.TestCase):
 
     def test_func_docstrings(self):
         """Test for the presence of docstrings in BaseModel methods
-        This method is used to test for the presence of docstrings in the BaseModel methods.
+        This method is used to test for the presence of
+        docstrings in the BaseModel methods.
         """
         for func in self.base_funcs:
             with self.subTest(function=func):
@@ -82,7 +88,8 @@ class TestBaseModel(unittest.TestCase):
     """
     def test_instantiation(self):
         """Test the instantiation of the BaseModel class
-        This method is used to test the instantiation of the BaseModel class.
+        This method is used to test the instantiation of
+        the BaseModel class.
         """
         i = BaseModel()
         self.assertEqual(type(i), BaseModel)
@@ -131,7 +138,8 @@ class TestBaseModel(unittest.TestCase):
 
     def test_str(self):
         """Test the __str__ method of the BaseModel class
-        This method is used to test the __str__ method of the BaseModel class.
+        This method is used to test the __str__ method
+        of the BaseModel class.
         """
         i = BaseModel()
         self.assertEqual(str(i), '[BaseModel] ({}) {}'.format(i.id, i.__dict__))
