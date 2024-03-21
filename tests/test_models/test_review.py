@@ -3,7 +3,8 @@
 """
 This module contains test cases for the Review class in the models module.
 The test cases ensure the Review class is working as expected.
-It also ensures the attributes and methods of the Review class are working as expected.
+It also ensures the attributes and methods
+of the Review class are working as expected.
 """
 
 import unittest
@@ -21,7 +22,8 @@ Review = Review
 class TestReview(unittest.TestCase):
     """
     This class contains test cases for the Review class.
-    It includes test cases for the attributes and methods of the Review class.
+    It includes test cases for the attributes
+    and methods of the Review class.
     The test cases ensure the Review class is working as expected.
     """
 
@@ -29,7 +31,8 @@ class TestReview(unittest.TestCase):
         """
         This method is used to prepare the test fixture.
         It ensures the Review class is ready for testing.
-        The method is called before any test case of the TestReview class is run.
+        The method is called before any
+        test case of the TestReview class is run.
         """
         cls.review_f = inspect.getmembers(Review, inspect.isfunction)
 
@@ -55,7 +58,8 @@ class TestReview(unittest.TestCase):
 
     def test_review_module_docstring(self):
         """
-        This method tests for the presence of a docstring in the review.py module.
+        This method tests for the presence
+        of a docstring in the review.py module.
         It ensures the review.py module has a docstring.
         """
         self.assertIsNot(review.__doc__, None,
@@ -93,8 +97,10 @@ class TestReview(unittest.TestCase):
 
     def test_place_id_attr(self):
         """
-        This method tests if Review has an attribute place_id, and it's an empty string.
-        It ensures the Review class has an attribute place_id, and it's an empty string by default.
+        This method tests if Review has an
+        attribute place_id, and it's an empty string.
+        It ensures the Review class has
+        an attribute place_id, and it's an empty string by default.
         The test passes if the attribute is present and it's an empty string.
         """
         review = Review()
@@ -106,9 +112,12 @@ class TestReview(unittest.TestCase):
 
     def test_user_id_attr(self):
         """
-        This method tests if Review has an attribute user_id, and it's an empty string.
-        It ensures the Review class has an attribute user_id, and it's an empty string by default.
-        The test passes if the attribute is present and it's an empty string.
+        This method tests if Review has an
+        attribute user_id, and it's an empty string.
+        It ensures the Review class has
+        an attribute user_id, and it's an empty string by default.
+        The test passes if the attribute
+        is present and it's an empty string.
         """
         review = Review()
         self.assertTrue(hasattr(review, "user_id"))
@@ -119,9 +128,12 @@ class TestReview(unittest.TestCase):
 
     def test_text_attr(self):
         """
-        This method tests if Review has an attribute text, and it's an empty string.
-        It ensures the Review class has an attribute text, and it's an empty string by default.
-        The test passes if the attribute is present and it's an empty string.
+        This method tests if Review
+        has an attribute text, and it's an empty string.
+        It ensures the Review class has
+        an attribute text, and it's an empty string by default.
+        The test passes if the attribute
+        is present and it's an empty string.
         """
         review = Review()
         self.assertTrue(hasattr(review, "text"))
@@ -133,7 +145,8 @@ class TestReview(unittest.TestCase):
     def test_to_dict_creates_dict(self):
         """
         This method tests if the to_dict method creates a dictionary.
-        It ensures the to_dict method creates a dictionary representation of the Review instance.
+        It ensures the to_dict method creates
+        a dictionary representation of the Review instance.
         The test passes if the output is a dictionary.
         """
         review = Review()
@@ -144,8 +157,10 @@ class TestReview(unittest.TestCase):
 
     def test_to_dict_values(self):
         """
-        This method tests if the to_dict method creates a dictionary with proper key/values.
-        It ensures the to_dict method creates a dictionary with the expected key/values.
+        This method tests if the to_dict method
+        creates a dictionary with proper key/values.
+        It ensures the to_dict method creates
+        a dictionary with the expected key/values.
         The test passes if the key/values are as expected.
         """
         review = Review()
@@ -157,7 +172,8 @@ class TestReview(unittest.TestCase):
     def test_str(self):
         """
         This method tests the __str__ method of the Review class.
-        It ensures the __str__ method of the Review class prints the expected string.
+        It ensures the __str__ method of the
+        Review class prints the expected string.
         The test passes if the output is as expected.
         """
         review = Review()
