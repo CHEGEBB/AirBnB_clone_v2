@@ -16,6 +16,8 @@ from models.review import Review
 from datetime import datetime
 import cmd
 import shlex
+import json
+import models
 
 classes = {"BaseModel": BaseModel, "User": User, "State": State,
            "City": City, "Place": Place, "Amenity": Amenity, "Review": Review}
@@ -98,68 +100,48 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             print([str(all_objs[obj]) for obj in all_objs if obj.split(".")[0] == args[0]])
-
-    def do_update(self, line):
-        """Updates an instance based on the class name and id by adding or updating attribute
-        (save the change into the JSON file)"""
-        args = shlex.split(line)
+    
+    def do_update(self, arg):
+        """This function updates an instance based on the class name and id by adding or updating attribute
+        (save the change into the JSON file)
+        If the instance doesn't exist, prints ** no instance found **
+        If the attribute name doesn't exist, prints ** no instance found **
+        """
+        args = shlex.split(arg)
+        integers = ["number_rooms", "number_bathrooms", "max_guest",
+                    "price_by_night"]
+        floats = ["latitude", "longitude"]
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in classes:
-            print("** class doesn't exist **")
-        elif len(args) == 1:
-            print("** instance id missing **")
-        elif len(args) == 2:
-            print("** attribute name missing **")
-        elif len(args) == 3:
-            print("** value missing **")
-        else:
-            key = args[0] + "." + args[1]
-            all_objs = storage.all()
-            if key in all_objs:
-                setattr(all_objs[key], args[2], args[3])
-                all_objs[key].save()
-            else:
-                print("** no instance found **")
-
-    def default(self, line):
-        """Called on an input line when the command prefix is not recognized"""
-        print("Received command:", line)
-        args = line.split(".")
-        print("Split arguments:", args)
-        if len(args) == 2:
-            if args[0] in classes:
-                if args[1] == "all()":
-                    print("Executing do_all with class:", args[0])
-                    self.do_all(args[0])
-                elif args[1] == "count()":
-                    print("Executing count() with class:", args[0])
-                    count = 0
-                    all_objs = storage.all()
-                    for obj in all_objs:
-                        if obj.split(".")[0] == args[0]:
-                            count += 1
-                    print(count)
-                elif args[1].startswith("show(") and args[1].endswith(")"):
-                    id = args[1][args[1].find("(")+1:args[1].find(")")]
-                    print("Executing show() with class:", args[0], "and id:", id)
-                    self.do_show(args[0] + " " + id)
-                elif args[1].startswith("destroy(") and args[1].endswith(")"):
-                    id = args[1][args[1].find("(")+1:args[1].find(")")]
-                    print("Executing destroy() with class:", args[0], "and id:", id)
-                    self.do_destroy(args[0] + " " + id)
-                elif args[1].startswith("update(") and args[1].endswith(")"):
-                    id = args[1][args[1].find("(")+1:args[1].find(")")]
-                    args = args[1][args[1].find(")")+2:]
-                    args = args.replace(",", "")
-                    print("Executing update() with class:", args[0], "and id:", id, "and args:", args)
-                    self.do_update(args[0] + " " + id + " " + args)
+        elif args[0] in classes:
+            if len(args) > 1:
+                k = args[0] + "." + args[1]
+                if k in models.storage.all():
+                    if len(args) > 2:
+                        if len(args) > 3:
+                            if args[0] == "Place":
+                                if args[2] in integers:
+                                    try:
+                                        args[3] = int(args[3])
+                                    except:
+                                        args[3] = 0
+                                elif args[2] in floats:
+                                    try:
+                                        args[3] = float(args[3])
+                                    except:
+                                        args[3] = 0.0
+                            setattr(models.storage.all()[k], args[2], args[3])
+                            models.storage.all()[k].save()
+                        else:
+                            print("** value missing **")
+                    else:
+                        print("** attribute name missing **")
                 else:
-                    print("*** Unknown syntax: {}".format(line))
+                    print("** no instance found **")
             else:
-                print("** class doesn't exist **")
+                print("** instance id missing **")
         else:
-            print("*** Unknown syntax: {}".format(line))
+            print("** class doesn't exist **")
 
 
 if __name__ == '__main__':
