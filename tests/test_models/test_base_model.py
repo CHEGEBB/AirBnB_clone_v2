@@ -18,9 +18,8 @@ from unittest import mock
 BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
 
+
 class TestBaseModelDocs(unittest.TestCase):
-
-
     """This class contains tests to check the
     documentation and style of BaseModel class
     It is a subclass of unittest.TestCase.
