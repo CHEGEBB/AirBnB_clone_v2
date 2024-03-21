@@ -40,8 +40,10 @@ class Place(Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        reviews = relationship("Review", backref="place", cascade="all, delete")
-        amenities = relationship("Amenity", secondary=place_amenity, viewonly=False)
+        reviews = relationship("Review", backref="place",
+                               cascade="all, delete")
+        amenities = relationship("Amenity",
+                                secondary=place_amenity, viewonly=False)
     else:
         city_id = ""
         user_id = ""
@@ -85,7 +87,8 @@ class Place(Base):
     def __init__(self, *args, **kwargs):
         """This is the initialization of the Place class
         We use the __init__ method to initialize the Place class
-        The __init__ method is a special method in Python that is called when an instance (object) of the class is created"""
+        The __init__ method is a special method in Python that is
+        called when an instance (object) of the class is created"""
         super().__init__(*args, **kwargs)
         if os.getenv('HBNB_TYPE_STORAGE') != 'db':
             self.amenity_ids = []
