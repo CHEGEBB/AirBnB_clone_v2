@@ -8,6 +8,7 @@ and it contains the review text and the user id
 
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 import models
 import os
