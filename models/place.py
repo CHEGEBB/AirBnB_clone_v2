@@ -1,29 +1,26 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
-"""This is the place module and it contains the Place class the place class inherits from the BaseModel class
-Place class is the main class for the project and it contains all the information about the place"""
+"""This is the place module and it contains the Place class
+The Place class inherits from the BaseModel class
+"""
 
-import uuid
-from datetime import datetime
-from models.base_model import BaseModel
-from models.city import City
-from models.user import User
-from os import getenv
+import os
 from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
 from sqlalchemy.orm import relationship
+from models.base_model import BaseModel, Base
 from models.review import Review
 from models.amenity import Amenity
-from sqlalchemy.ext.declarative import declarative_base
-import models
-import os
 
 if os.getenv('HBNB_TYPE_STORAGE') == 'db':
     Base = declarative_base()
     place_amenity = Table('place_amenity', Base.metadata,
-                         Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
-                         Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
-    
-class Place(BaseModel, Base):
+                          Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
+                          Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
+else:
+    Base = BaseModel
+
+
+class Place(Base):
     """This is the Place class it represents the place
     The Place class inherits from the BaseModel class"""
 
