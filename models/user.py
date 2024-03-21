@@ -11,6 +11,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 import os
+from sqlalchemy import Integer
 
 Base = declarative_base()
 
@@ -19,6 +20,7 @@ class User(BaseModel, Base):
     """This is the User class.
     
     Attributes:
+        id (int): The primary key of the user.
         email (str): The email of the user.
         password (str): The password of the user.
         first_name (str): The first name of the user.
@@ -28,6 +30,7 @@ class User(BaseModel, Base):
     __tablename__ = 'users'
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        id = Column(Integer, primary_key=True)
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
