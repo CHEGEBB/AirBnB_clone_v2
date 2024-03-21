@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 
-"""This module contains the test for the Amenity class
+"""
+This module contains the test for the Amenity class
 It is a unit test module that defines test cases for the Amenity class
-It makes use of the unittest module to test the functionality of the Amenity class.
+It makes use of the unittest module to test the
+functionality of the Amenity class.
 """
 
 import unittest
@@ -18,14 +20,16 @@ Amenity = amenity.Amenity
 
 
 class TestAmenity(unittest.TestCase):
-    """This class defines the test suite for the Amenity class
-    It makes use of the unittest module to test the functionality of the Amenity class.
-    It defines a series of test cases that test the functionality of the Amenity class.
+    """
+    This class defines the test suite for the Amenity class
+    It makes use of the unittest module to test the
+    functionality of the Amenity class.
     """
     @classmethod
     def setUpClass(cls):
         """This method is called to prepare the test fixture.
-        It creates an instance of the Amenity class that can be used in the test methods.
+        It creates an instance of the Amenity
+        class that can be used in the test methods.
         """
         cls.amenity = Amenity()
         cls.amenity.name = "Breakfast"
@@ -38,8 +42,10 @@ class TestAmenity(unittest.TestCase):
         del cls.amenity
 
     def test_amenity_pep8_conformance(self):
-        """The test_amenity_pep8_conformance tests the amenity.py file for PEP8 conformance.
-        It uses the pep8 module to validate the conformity of amenity.py with PEP8.
+        """The test_amenity_pep8_conformance tests the
+        amenity.py file for PEP8 conformance.
+        It uses the pep8 module to validate
+        the conformity of amenity.py with PEP8.
         """
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/amenity.py'])
@@ -47,8 +53,10 @@ class TestAmenity(unittest.TestCase):
                          "Found code style errors (and warnings).")
 
     def test_amenity_pep8_conformance_test(self):
-        """The test_amenity_pep8_conformance_test tests the test_amenity.py file for PEP8 conformance.
-        It uses the pep8 module to validate the conformity of test_amenity.py with PEP8.
+        """The test_amenity_pep8_conformance_test tests
+        the test_amenity.py file for PEP8 conformance.
+        It uses the pep8 module to validate the
+        conformity of test_amenity.py with PEP8.
         """
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_amenity.py'])
@@ -56,7 +64,8 @@ class TestAmenity(unittest.TestCase):
                          "Found code style errors (and warnings).")
 
     def test_amenity_module_docstring(self):
-        """The test_amenity_module_docstring tests the amenity.py file for a docstring.
+        """The test_amenity_module_docstring tests
+        the amenity.py file for a docstring.
         It checks if the amenity.py file has a docstring.
         """
         self.assertIsNot(amenity.__doc__, None,
@@ -65,7 +74,8 @@ class TestAmenity(unittest.TestCase):
                         "amenity.py needs a docstring")
 
     def test_amenity_class_docstring(self):
-        """The test_amenity_class_docstring tests the Amenity class for a docstring.
+        """The test_amenity_class_docstring 
+        tests the Amenity class for a docstring.
         It checks if the Amenity class has a docstring.
         """
         self.assertIsNot(Amenity.__doc__, None,
@@ -74,7 +84,8 @@ class TestAmenity(unittest.TestCase):
                         "Amenity class needs a docstring")
 
     def test_amenity_func_docstrings(self):
-        """The test_amenity_func_docstrings tests the presence of docstrings in Amenity methods.
+        """The test_amenity_func_docstrings 
+        tests the presence of docstrings in Amenity methods.
         It checks if all the methods of the Amenity class have docstrings.
         """
         for func in self.amenity.__dir__():
@@ -102,7 +113,8 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(amenity.name, "")
 
     def test_to_dict_creates_dict(self):
-        """The test_to_dict_creates_dict tests that the to_dict method creates a dictionary with proper attributes.
+        """The test_to_dict_creates_dict tests 
+        that the to_dict method creates a dictionary with proper attributes.
         It checks if the to_dict method creates a dictionary with proper attributes.
         """
         am = Amenity()
@@ -114,7 +126,8 @@ class TestAmenity(unittest.TestCase):
         self.assertTrue("__class__" in new_d)
 
     def test_to_dict_values(self):
-        """The test_to_dict_values tests that the values in the dictionary returned from to_dict are correct.
+        """The test_to_dict_values tests that the
+        values in the dictionary returned from to_dict are correct.
         It checks if the values in the dictionary returned from to_dict are correct.
         The test checks if the values in the dictionary are of the correct type.
         """
