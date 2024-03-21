@@ -16,12 +16,12 @@ from sqlalchemy.orm import relationship
 import models
 import os
 
-# Import City class
-from models.city import City
-
 class State(BaseModel, Base):
     """This is the State class it represents the state of the place
     The State class inherits from the BaseModel class"""
+
+    # Import City class here to avoid circular import issues
+    from models.city import City
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'states'
@@ -41,14 +41,14 @@ class State(BaseModel, Base):
                         city_list.append(city)
                 return city_list
             else:
-                return [city for city in models.storage.all(City)
+                return [city for city in models.storage.all(State.City)
                         if city.state_id == self.id]
 
     if os.getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):
             """This is the getter method for the cities attribute"""
-            return [city for city in models.storage.all(City)
+            return [city for city in models.storage.all(State.City)
                     if city.state_id == self.id]
 
     def __init__(self, *args, **kwargs):
