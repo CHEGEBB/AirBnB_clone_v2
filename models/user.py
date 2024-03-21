@@ -1,42 +1,46 @@
 #!/usr/bin/python3
 
-"""This is the state module and it contains the State class the State class inherits from the BaseModel class
-The State class represents the state of the place and it contains the state name
+"""This is the user module.It contains the User class.
+This class inherits from BaseModel.
+It defines the attributes of the User class.
+It also contains the User class methods.
 """
 
-import uuid
-from datetime import datetime
-from models.base_model import BaseModel, Base
-from models.city import City
+from models.base_model import BaseModel
+import models
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-import models
 import os
 
 
-class State(BaseModel, Base):
-    """This is the State class it represents the state of the place
-    The State class inherits from the BaseModel class"""
+class User(BaseModel, Base):
+    """This is the User class.
+    It inherits from BaseModel.
+    Attributes:
+        email (str): The email of the user.
+        password (str): The password of the user.
+        first_name (str): The first name of the user.
+        last_name (str): The last name of the user.
+    """
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        __tablename__ = 'states'
-        name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state", cascade="all, delete")
+        __tablename__ = 'users'
+        email = Column(String(128), nullable=False)
+        password = Column(String(128), nullable=False)
+        first_name = Column(String(128), nullable=True)
+        last_name = Column(String(128), nullable=True)
+        places = relationship("Place", backref="user")
+        reviews = relationship("Review", backref="user")
     else:
-        name = ""
+        email = ""
+        password = ""
+        first_name = ""
+        last_name = ""
 
-        @property
-        def cities(self):
-            """This is the getter method for the cities attribute"""
-            cities = models.storage.all("City")
-            city_list = []
-            for city in cities.values():
-                if city.state_id == self.id:
-                    city_list.append(city)
-            return city_list
-        
     def __init__(self, *args, **kwargs):
-        """This is the initialization of the State class
-        We use the __init__ method to initialize the State class
-        The __init__ method is a special method in Python that is called when an instance (object) of the class is created"""
+        """This is the __init__ method.
+        It is the initializer of the User class.
+        It calls the super class initializer.
+        It also checks the environment variable for the type of storage.
+        """
         super().__init__(*args, **kwargs)
