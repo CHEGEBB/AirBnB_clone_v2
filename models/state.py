@@ -1,13 +1,13 @@
-#!/usr/bin/python3
-""" holds class State"""
+import os
 import models
 from models.base_model import BaseModel, Base
 from models.city import City
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-import os
 from sqlalchemy.ext.declarative import declarative_base
 
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
 
 class State(BaseModel, Base):
     """Representation of state """
