@@ -19,6 +19,7 @@ BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
 
 class TestBaseModelDocs(unittest.TestCase):
+    
     """This class contains tests to check the
     documentation and style of BaseModel class
     It is a subclass of unittest.TestCase.
@@ -142,7 +143,8 @@ class TestBaseModel(unittest.TestCase):
         of the BaseModel class.
         """
         i = BaseModel()
-        self.assertEqual(str(i), '[BaseModel] ({}) {}'.format(i.id, i.__dict__))
+        self.assertEqual(str(i),
+                         '[BaseModel] ({}) {}'.format(i.id, i.__dict__))
 
     def test_kwargs(self):
         """Test the kwargs of the BaseModel class
@@ -181,7 +183,8 @@ class TestBaseModel(unittest.TestCase):
 
     def test_datetime_attributes(self):
         """Test the datetime attributes of the BaseModel class
-        This method is used to test the datetime attributes of the BaseModel class.
+        This method is used to test the datetime
+        attributes of the BaseModel class.
         """
         tic = datetime.now()
         inst1 = BaseModel()
