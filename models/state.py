@@ -32,12 +32,23 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """This is the getter method for the cities attribute"""
-            cities = models.storage.all("City")
-            city_list = []
-            for city in cities.values():
-                if city.state_id == self.id:
-                    city_list.append(city)
-            return city_list
+            if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+                cities = models.storage.all("City")
+                city_list = []
+                for city in cities.values():
+                    if city.state_id == self.id:
+                        city_list.append(city)
+                return city_list
+            else:
+                return [city for city in models.storage.all(City)
+                        if city.state_id == self.id]
+
+    if os.getenv('HBNB_TYPE_STORAGE') != 'db':
+        @property
+        def cities(self):
+            """This is the getter method for the cities attribute"""
+            return [city for city in models.storage.all(City)
+                    if city.state_id == self.id]
 
     def __init__(self, *args, **kwargs):
         """
