@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """This module is the console of the AirBnB clone project"""
 
 import cmd
@@ -77,10 +76,8 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, line):
-
         """Prints all string representation of all instances based or not on the
         class name"""
-
         args = line.split()
         if not line:
             print([str(value) for value in models.storage.all().values()])
@@ -89,7 +86,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print([str(value) for key, value in models.storage.all().items()
                    if key.split('.')[0] == args[0]])
-            
+
     def do_update(self, line):
         """Updates an instance based on the class name and id by adding or
         updating attribute (save the change into the JSON file)"""
@@ -146,4 +143,3 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-    
