@@ -33,10 +33,9 @@ class BaseModel:
         updated_at = Column(DateTime,
                             default=datetime.utcnow(), nullable=False)
 
-
     def __init__(self, *args, **kwargs):
         """This is the initialization of the BaseModel class
-          when an instance (object) of the class is created
+           when an instance (object) of the class is created
           """
 
         if kwargs:
@@ -65,7 +64,8 @@ class BaseModel:
          print() function
         """
 
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__,
+                                     self.id, self.__dict__)
     
     def save(self):
         """This saves the BaseModel instance
