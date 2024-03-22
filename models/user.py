@@ -4,15 +4,12 @@ This class inherits from BaseModel.
 It defines the attributes of the User class.
 It also contains the User class methods.
 """
-import models
-from models.base_model import BaseModel, Base
+import os
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-import os
-from sqlalchemy.ext.declarative import declarative_base
+from models.base_model import BaseModel, Base
 from models.place import Place  # Import Place model before using it
 from models.review import Review
-
 
 class User(BaseModel, Base):
     """ This is the User class.
