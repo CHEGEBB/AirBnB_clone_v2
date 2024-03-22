@@ -2,23 +2,21 @@
 
 """This is the city module and it contains the City class the
 city class inherits from the base model class
-    The City class represents the city of the place"""
-from models.base_model import BaseModel
-import models
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, ForeignKey
-from os import getenv
-from sqlalchemy.ext.declarative import declarative_base
+The City class represents the city of the place"""
 
+from models.base_model import BaseModel
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship
+from os import getenv
 
 if getenv('HBNB_TYPE_STORAGE') == 'db':
+    from sqlalchemy.ext.declarative import declarative_base
     Base = declarative_base()
 else:
     Base = object
 
 
 class City(BaseModel, Base):
-
     """This is the City class it represents the city of the place
     The City class inherits from the BaseModel class
     """
@@ -28,6 +26,7 @@ class City(BaseModel, Base):
         name = Column(String(128), nullable=False)
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
         places = relationship("Place", backref="cities", cascade="all, delete")
+
     else:
         name = ""
         state_id = ""
