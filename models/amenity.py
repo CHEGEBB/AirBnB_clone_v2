@@ -1,39 +1,31 @@
 #!/usr/bin/python
-""" holds class Amenity"""
-import models
-from models.base_model import BaseModel, Base
+
+""" This is the amenity module and it contains the Amenity class
+The Amenity class inherits from the BaseModel class
+"""
+
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
+import models
 from sqlalchemy.orm import relationship
 import os
+from models.base_model import BaseModel, Base
 
 
 class Amenity(BaseModel, Base):
-    """Representation of Amenity """
+    """This is the Amenity class it represents the amenity
+    The Amenity class inherits from the BaseModel class
+    It defines the attributes of the Amenity class
+    """
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'amenities'
         name = Column(String(128), nullable=False)
-        place_amenities = relationship("Place", secondary="place_amenity")
     else:
         name = ""
 
-    if os.getenv('HBNB_TYPE_STORAGE') != 'db':
-        @property
-        def place_amenities(self):
-            """getter attribute returns the list of City instances with state_id"""
-            list_amenities = []
-            for key, value in models.storage.all().items():
-                if value.__class__.__name__ == 'Place' and value.amenity_id == self.id :
-                    list_amenities.append(value)
-            return list_amenities
-        
-        @place_amenities.setter
-        def place_amenities(self, obj):
-            """setter attribute links the place_amenity relationship"""
-            if obj.__class__.__name__ == 'Place':
-                self.place_amenities.append(obj)
-
     def __init__(self, *args, **kwargs):
-        """initializes Amenity"""
+        """This method initializes the Amenity instance
+        It calls the __init__ method of the super class
+        """
         super().__init__(*args, **kwargs)
