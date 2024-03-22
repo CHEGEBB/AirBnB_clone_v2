@@ -9,14 +9,11 @@ from os import getenv
 from models.engine.file_storage import FileStorage
 from models.engine.db_storage import DBStorage
 
-storage_t = getenv("HBNB_TYPE_STORAGE")
-
-if storage_t == "db":
-    from models.engine.db_storage import DBStorage
+if getenv('HBNB_TYPE_STORAGE') == 'db':
     storage = DBStorage()
 else:
-    from models.engine.file_storage import FileStorage
     storage = FileStorage()
+
 storage.reload()
 
 def close(self):
@@ -57,5 +54,5 @@ def delete(self, obj=None):
 
 def get(self, cls, id):
     """This method calls the get method on the storage instance
-    It calls the get method on the storage instance"""
+    """
     return storage.get(cls, id)

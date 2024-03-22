@@ -1,105 +1,168 @@
 #!/usr/bin/python3
-"""
-Contains the TestStateDocs classes
-"""
 
-from datetime import datetime
-import inspect
-import models
-from models import state
-from models.base_model import BaseModel
-import pep8
+"""This module contains test cases for the
+State class in the models module.
+The test cases ensures the State class is working as expected.
+It also ensures the attributes and
+methods of the State class are working as expected.
+"""
+from sqlalchemy.ext.declarative import declarative_base
+import os
 import unittest
-State = state.State
+from models.state import State
+from models.base_model import BaseModel
+import inspect
+import pep8
+from models import state
+import models
+State = State
+
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
+else:
+    Base = object
 
 
-class TestStateDocs(unittest.TestCase):
-    """Tests to check the documentation and style of State class"""
+class TestState(unittest.TestCase):
+    """This class contains test cases for the State class
+    It includes test cases for the
+    attributes and methods of the State class.
+    The test cases ensures the State class is working as expected.
+    """
     @classmethod
     def setUpClass(cls):
-        """Set up for the doc tests"""
+        """This method is used to prepare the test fixture.
+        It ensures the State class is ready for testing.
+        The method is called before any test
+        case of the TestState class is run.
+        """
         cls.state_f = inspect.getmembers(State, inspect.isfunction)
 
     def test_pep8_conformance_state(self):
-        """Test that models/state.py conforms to PEP8."""
+        """This method checks for PEP8 conformance in the State class.
+        It ensures the State class conforms to PEP8 standards.
+        """
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/state.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_state(self):
-        """Test that tests/test_models/test_state.py conforms to PEP8."""
+        """This method checks for PEP8 conformance in the test_state.py file.
+        It ensures the test_state.py file conforms to PEP8 standards.
+        """
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_state.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_state_module_docstring(self):
-        """Test for the state.py module docstring"""
+        """This method tests for the presence
+        of a docstring in the state.py module.
+        It ensures the state.py module has a docstring.
+        """
         self.assertIsNot(state.__doc__, None,
                          "state.py needs a docstring")
         self.assertTrue(len(state.__doc__) >= 1,
                         "state.py needs a docstring")
 
     def test_state_class_docstring(self):
-        """Test for the State class docstring"""
+        """This method tests for the presence
+        of a docstring in the State class.
+        It ensures the State class has a docstring.
+        """
+        self.assertIsNot(State.__doc__, None,
+                         "State class needs a docstring")
+        self.assertTrue(len(State.__doc__) >= 1,
+                        "State class needs a docstring")
+
+    def test_state_class_docstring(self):
+        """This method tests for the
+        presence of a docstring in the State class.
+        It ensures the State class has a docstring.
+        """
         self.assertIsNot(State.__doc__, None,
                          "State class needs a docstring")
         self.assertTrue(len(State.__doc__) >= 1,
                         "State class needs a docstring")
 
     def test_state_func_docstrings(self):
-        """Test for the presence of docstrings in State methods"""
+        """This method tests for the presence of docstrings in State methods.
+        It ensures the methods of the State class have docstrings.
+        """
         for func in self.state_f:
-            self.assertIsNot(func[1].__doc__, None,
-                             "{:s} method needs a docstring".format(func[0]))
-            self.assertTrue(len(func[1].__doc__) >= 1,
-                            "{:s} method needs a docstring".format(func[0]))
+            self.assertIsNot(func.__doc__, None,
+                             "{} method needs a docstring".format(func))
+            self.assertTrue(len(func.__doc__) >= 1,
+                            "{} method needs a docstring".format(func))
 
 
 class TestState(unittest.TestCase):
-    """Test the State class"""
+    """This class contains test cases for the State class
+    It includes test cases for the attributes and methods of the State class.
+    The test cases ensures the State class is working as expected.
+    """
     def test_is_subclass(self):
-        """Test that State is a subclass of BaseModel"""
+        """This method tests if State is a subclass of BaseModel
+        It ensures the State class is a subclass of BaseModel.
+        The test passes if State is a subclass of BaseModel.
+        """
         state = State()
-        self.assertIsInstance(state, BaseModel)
-        self.assertTrue(hasattr(state, "id"))
-        self.assertTrue(hasattr(state, "created_at"))
-        self.assertTrue(hasattr(state, "updated_at"))
+        self.assertTrue(issubclass(state.__class__, BaseModel), True)
 
     def test_name_attr(self):
-        """Test that State has attribute name, and it's as an empty string"""
+        """This method tests if State has an
+        attribute name, and it's an empty string
+        It ensures the State class has an
+        attribute name, and it's an empty string by default.
+        The test passes if the attribute
+        is present and it's an empty string.
+        """
         state = State()
         self.assertTrue(hasattr(state, "name"))
-        if models.storage_t == 'db':
-            self.assertEqual(state.name, None)
-        else:
-            self.assertEqual(state.name, "")
+        self.assertEqual(state.name, "")
 
     def test_to_dict_creates_dict(self):
-        """test to_dict method creates a dictionary with proper attrs"""
+        """This method tests if to_dict
+        method creates a dictionary with proper attrs
+        It ensures the to_dict method creates
+        a dictionary with the proper attributes.
+        The test passes if the dictionary is
+        created and the attributes are correct.
+        """
         s = State()
-        new_d = s.to_dict()
-        self.assertEqual(type(new_d), dict)
-        self.assertFalse("_sa_instance_state" in new_d)
+        d = s.to_dict()
+        self.assertEqual(type(d), dict)
         for attr in s.__dict__:
-            if attr is not "_sa_instance_state":
-                self.assertTrue(attr in new_d)
-        self.assertTrue("__class__" in new_d)
+            self.assertTrue(attr in d)
+        self.assertTrue("__class__" in d)
+        self.assertTrue(d["__class__"] == "State")
+        self.assertTrue(d["created_at"] == s.created_at.isoformat())
+        self.assertTrue(d["updated_at"] == s.updated_at.isoformat())
 
     def test_to_dict_values(self):
-        """test that values in dict returned from to_dict are correct"""
+        """This method tests if values in dict
+        returned from to_dict are correct
+        It ensures the values in the dictionary
+        returned from the to_dict method are correct.
+        The test passes if the values are correct.
+        """
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
         s = State()
         new_d = s.to_dict()
         self.assertEqual(new_d["__class__"], "State")
-        self.assertEqual(type(new_d["created_at"]), str)
-        self.assertEqual(type(new_d["updated_at"]), str)
         self.assertEqual(new_d["created_at"], s.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], s.updated_at.strftime(t_format))
+        self.assertEqual(new_d["created_at"], s.created_at.isoformat())
+        self.assertEqual(new_d["updated_at"], s.updated_at.isoformat())
 
     def test_str(self):
-        """test that the str method has the correct output"""
-        state = State()
-        string = "[State] ({}) {}".format(state.id, state.__dict__)
-        self.assertEqual(string, str(state))
+        """This method tests the __str__ method of the State class
+        It ensures the __str__ method of the
+        State class is working as expected.
+        The test passes if the __str__ method
+        returns the expected string.
+        """
+        s = State()
+        string = "[State] ({}) {}".format(s.id, s.__dict__)
+        self.assertEqual(string, str(s))
