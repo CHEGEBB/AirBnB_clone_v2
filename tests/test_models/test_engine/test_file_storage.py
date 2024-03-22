@@ -1,111 +1,86 @@
 #!/usr/bin/python3
-
-"""This module contains the test for the file_storage module
-This module contains the test for the file_storage module.
-The test ensures the file_storage module is working as expected.
+"""
+Contains the TestFileStorageDocs classes
 """
 
-import unittest
-import pep8
+from datetime import datetime
 import inspect
-from models.engine.file_storage import FileStorage
-from models import storage
+import models
+from models.engine import file_storage
+from models.amenity import Amenity
 from models.base_model import BaseModel
-from models.user import User
-from models.state import State
 from models.city import City
 from models.place import Place
 from models.review import Review
-from models.amenity import Amenity
-import inspect
-import os
-import models
+from models.state import State
+from models.user import User
 import json
-FileStorage = models.engine.file_storage.FileStorage
+import os
+import pep8
+import unittest
+FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class TestFileStorageDocs(unittest.TestCase):
-    """This class contains test cases for the file_storage module
-    This class contains test cases for the file_storage module in the file_storage module.
-    It includes test cases for the file_storage module documentation and style.
-    """
-
+    """Tests to check the documentation and style of FileStorage class"""
     @classmethod
     def setUpClass(cls):
-        """This method is used to prepare the test fixture
-        This method is used to prepare the test fixture.
-        It ensures the file_storage module is ready for testing.
-        """
+        """Set up for the doc tests"""
         cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)
 
     def test_pep8_conformance_file_storage(self):
-        """This method checks for PEP8 conformance in the file_storage module.
-        It ensures the file_storage module conforms to PEP8 standards.
-        """
+        """Test that models/engine/file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_file_storage(self):
-        """This method checks for PEP8 conformance in the test_file_storage.py file.
-        It ensures the test_file_storage.py file conforms to PEP8 standards.
-        """
+        """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\test_file_storage.py'])
+        result = pep8s.check_files(['tests/test_models/test_engine/\
+test_file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
-        
+
     def test_file_storage_module_docstring(self):
-        """This method tests for the presence of a docstring in the file_storage module.
-        It ensures the file_storage module has a docstring.
-        """
-        self.assertIsNot(models.engine.file_storage.__doc__, None,
+        """Test for the file_storage.py module docstring"""
+        self.assertIsNot(file_storage.__doc__, None,
                          "file_storage.py needs a docstring")
-        self.assertTrue(len(models.engine.file_storage.__doc__) >= 1,
+        self.assertTrue(len(file_storage.__doc__) >= 1,
                         "file_storage.py needs a docstring")
-        
+
     def test_file_storage_class_docstring(self):
-        """This method tests for the presence of a docstring in the FileStorage class.
-        It ensures the FileStorage class has a docstring.
-        """
+        """Test for the FileStorage class docstring"""
         self.assertIsNot(FileStorage.__doc__, None,
                          "FileStorage class needs a docstring")
         self.assertTrue(len(FileStorage.__doc__) >= 1,
                         "FileStorage class needs a docstring")
-        
+
     def test_fs_func_docstrings(self):
-        """This method tests for the presence of docstrings in FileStorage methods.
-        It ensures the FileStorage methods have docstrings.
-        """
+        """Test for the presence of docstrings in FileStorage methods"""
         for func in self.fs_f:
             self.assertIsNot(func[1].__doc__, None,
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
-            
+
+
 class TestFileStorage(unittest.TestCase):
-    """This class contains test cases for the FileStorage class
-    This class contains test cases for the FileStorage class in the file_storage module.
-    It includes test cases for the FileStorage class methods.
-    """
-    @unittest.skipIf(models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db', "not testing file storage")
+    """Test the FileStorage class"""
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
-        """This method tests that all returns the FileStorage.__objects attr.
-        It ensures that the all method returns the FileStorage.__objects attribute.
-        """
+        """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
         new_dict = storage.all()
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @unittest.skipIf(models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
-        """This method tests that new adds an object to the FileStorage.__objects attr.
-        It ensures that the new method adds an object to the FileStorage.__objects attribute.
-        """
+        """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
         save = FileStorage._FileStorage__objects
         FileStorage._FileStorage__objects = {}
@@ -119,11 +94,9 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(models.os.getenv(HBNB_TYPE_STORAGE) == 'db' == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
-        """This method tests that save properly saves objects to file.json.
-        It ensures that the save method properly saves objects to the file.json file.
-        """
+        """Test that save properly saves objects to file.json"""
         storage = FileStorage()
         new_dict = {}
         for key, value in classes.items():
@@ -140,4 +113,3 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
-        
