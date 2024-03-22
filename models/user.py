@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """ This is the user module. It contains the User class.
 This class inherits from BaseModel.
 It defines the attributes of the User class.
@@ -16,8 +15,9 @@ class User(BaseModel, Base):
     It contains the attributes of the User class.
     It also contains the methods of the User class.
     """
+    __tablename__ = 'users'
+
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        __tablename__ = 'users'
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
