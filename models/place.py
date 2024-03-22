@@ -5,35 +5,19 @@ The Place class inherits from the BaseModel class
 """
 
 import os
-from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
+from sqlalchemy import Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
-from models.review import Review
-from models.amenity import Amenity
-from sqlalchemy.ext.declarative import declarative_base
 import models
 
 
-if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-    Base = declarative_base()
-    place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id', String(60),
-                                 ForeignKey('places.id'),
-                                 primary_key=True, nullable=False),
-                          Column('amenity_id', String(60),
-                                 ForeignKey('amenities.id'),
-                                 primary_key=True, nullable=False))
-else:
-    Base = BaseModel
-
-
-class Place(Base):
-    """This is the Place class it represents the place
-    The Place class inherits from the BaseModel class"""
+class Place(BaseModel, Base):
+    """This is the Place class, it represents the place.
+    The Place class inherits from the BaseModel and Base classes"""
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'places'
-        id = Column(String(60), primary_key=True, nullable=False)  # Define primary key
+
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
@@ -44,10 +28,10 @@ class Place(Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        reviews = relationship("Review", backref="place",
-                               cascade="all, delete")
-        amenities = relationship("Amenity",
-                                 secondary=place_amenity, viewonly=False)
+
+        reviews = relationship("Review", backref="place", cascade="all, delete")
+        amenities = relationship("Amenity", secondary="place_amenity", viewonly=False)
+
     else:
         city_id = ""
         user_id = ""
@@ -63,36 +47,49 @@ class Place(Base):
         @property
         def reviews(self):
             """This is the getter method for the reviews attribute"""
-            reviews = models.storage.all("Review")
-            review_list = []
-            for review in reviews.values():
-                if review.place_id == self.id:
-                    review_list.append(review)
-            return review_list
+            all_reviews = models.storage.all(Review)
+            place_reviews = [review for review in all_reviews.values() if review.place_id == self.id]
+            return place_reviews
 
         @property
         def amenities(self):
             """This is the getter method for the amenities attribute"""
-            amenities = models.storage.all("Amenity")
-            amenity_list = []
-            for amenity in amenities.values():
-                if amenity.id in self.amenity_ids:
-                    amenity_list.append(amenity)
-            return amenity_list
+            all_amenities = models.storage.all(Amenity)
+            place_amenities = [amenity for amenity in all_amenities.values() if amenity.place_id == self.id]
+            return place_amenities
 
         @amenities.setter
         def amenities(self, obj):
             """This is the setter method for the amenities attribute"""
-            if type(obj) == Amenity:
-                self.amenity_ids.append(obj.id)
-            else:
-                pass
+            if isinstance(obj, Amenity):
+                obj.place_id = self.id
+                models.storage.new(obj)
+                models.storage.save()
 
-    def __init__(self, *args, **kwargs):
-        """This is the initialization of the Place class
-        We use the __init__ method to initialize the Place class
-        The __init__ method is a special method in Python that is
-        called when an instance (object) of the class is created"""
-        super().__init__(*args, **kwargs)
-        if os.getenv('HBNB_TYPE_STORAGE') != 'db':
-            self.amenity_ids = []
+class User(BaseModel, Base):
+    """This is the User class, it represents a user."""
+    __tablename__ = 'users'
+
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        places = relationship("Place", backref="user", cascade="all, delete")
+    else:
+        @property
+        def places(self):
+            """This is the getter method for the places attribute"""
+            all_places = models.storage.all(Place)
+            user_places = [place for place in all_places.values() if place.user_id == self.id]
+            return user_places
+
+class City(BaseModel, Base):
+    """This is the City class, it represents a city."""
+    __tablename__ = 'cities'
+
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        places = relationship("Place", backref="cities", cascade="all, delete")
+    else:
+        @property
+        def places(self):
+            """This is the getter method for the places attribute"""
+            all_places = models.storage.all(Place)
+            city_places = [place for place in all_places.values() if place.city_id == self.id]
+            return city_places
