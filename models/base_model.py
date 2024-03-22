@@ -26,11 +26,11 @@ class BaseModel:
     """
 
     if getenv('HBNB_TYPE_STORAGE') == 'db':
+        __tablename__ = None
+
         id = Column(String(60), primary_key=True, nullable=False)
-        created_at = Column(DateTime,
-                            default=datetime.utcnow(), nullable=False)
-        updated_at = Column(DateTime,
-                            default=datetime.utcnow(), nullable=False)
+        created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
+        updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
 
     def __init__(self, *args, **kwargs):
         """This is the initialization of the BaseModel class
@@ -90,8 +90,8 @@ class BaseModel:
         dictionary['__class__'] = self.__class__.__name__
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
-        if '_sa_instance_state' in dictionary:
-            del dictionary['_sa_instance_state']
+        if getenv('HBNB_TYPE_STORAGE') == 'db':
+            dictionary.pop('_sa_instance_state', None)
         return dictionary
 
     def delete(self):
