@@ -12,7 +12,7 @@ from sqlalchemy.orm import relationship
 import os
 from models.city import City 
 from models import storage
-from models import models
+import models
 
 # Import the Base from sqlalchemy.ext.declarative
 from sqlalchemy.ext.declarative import declarative_base
