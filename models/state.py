@@ -4,13 +4,15 @@
 It is the State of the HBnB project
 It is a class that defines the State
 """
-#importing modules while avoiding circular imports
+
+# Importing modules while avoiding circular imports
 from models.base_model import BaseModel
-import models
-from models.city import City
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import os
+from models.city import City 
+
+# Import the Base from sqlalchemy.ext.declarative
 from sqlalchemy.ext.declarative import declarative_base
 
 # Define the declarative base
