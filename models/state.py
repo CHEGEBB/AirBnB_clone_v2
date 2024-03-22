@@ -1,36 +1,42 @@
 #!/usr/bin/python3
 
-"""This module contains the State class that inherits from BaseModel."""
-
-from sqlalchemy import Column, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-import os
+"""This module contains the State class that inherits from BaseModel
+It is the State of the HBnB project
+It is a class that defines the State
+"""
+#importing modules while avoiding circular imports
+from models.base_model import BaseModel
 import models
 from models.city import City
+from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
+import os
 
-from models.base_model import BaseModel
+class State(BaseModel):
+    """This is the State class
+    It is the State of the HBnB project
+    It is a class that defines the State
+    """
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        __tablename__ = 'states'
+        name = Column(String(128), nullable=False)
+        cities = relationship("City", backref="state")
+    else:
+        name = ""
 
-Base = declarative_base()  # Moved Base definition to the top
-
-class State(BaseModel, Base):
-    """Represents a State in the HBnB project."""
-    __tablename__ = 'states'
-
-    name = Column(String(128), nullable=False)
-    cities = relationship("City", backref="state")
-
-    # Getter for cities, only used for file storage
     if os.getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):
-            """Returns a list of City instances associated with this State."""
-            city_list = [city for city in models.storage.all(City).values()
-                          if city.state_id == self.id]
+            """This is a getter attribute that returns the list of City instances
+            It is a getter attribute that returns the list of City instances
+            """
+            city_list = []
+            for city in models.storage.all(City).values():
+                if city.state_id == self.id:
+                    city_list.append(city)
             return city_list
+        
 
-
-    # Define the __init__ method
     def __init__(self, *args, **kwargs):
         """This initializes the State instance
         It is the initialization of the State instance
