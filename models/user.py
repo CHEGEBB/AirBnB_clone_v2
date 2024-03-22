@@ -1,19 +1,14 @@
 #!/usr/bin/python3
-""" This is the user module. It contains the User class.
-This class inherits from BaseModel.
-It defines the attributes of the User class.
-It also contains the User class methods.
-"""
+""" holds class User"""
 import models
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-import os
-from sqlalchemy.ext.declarative import declarative_base
-from models.review import Review
+
 
 class User(BaseModel, Base):
-    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    """Representation of a user """
+    if models.storage_t == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
@@ -28,13 +23,5 @@ class User(BaseModel, Base):
         last_name = ""
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        from models.place import Place
-
-
-    def __init__(self, *args, **kwargs):
-        """This is the __init__ method.
-        It initializes the User class.
-        It also checks the environment variable for the type of storage.
-        """
+        """initializes user"""
         super().__init__(*args, **kwargs)
