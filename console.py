@@ -18,6 +18,7 @@ import cmd
 import shlex
 import models
 from models.amenity import Amenity
+
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
@@ -28,6 +29,7 @@ class HBNBCommand(cmd.Cmd):
     It is the entry point of the command interpreter
     """
     prompt = '(hbnb) '
+
     def _key_value_parser(self, args):
         """This creates a dictionary from a list of strings
         It is a helper function for the create command
@@ -107,43 +109,27 @@ class HBNBCommand(cmd.Cmd):
                     print(models.storage.all()[key])
                 else:
                     print("** no instance found **")
-            else:
-                print("** instance id missing **")
         else:
             print("** class doesn't exist **")
-
 
     def do_update(self, arg):
         """This updates an instance based on the class and id
         It is a command to update an instance
         The command syntax is update <Class name> <id> <attribute name> <attribute value>
-        It updates an instance based on the class and id
+        It updates an instance based on the class
         """
         args = shlex.split(arg)
-        integers = ["number_rooms", "number_bathrooms", "max_guest",
-                    "price_by_night"]
-        floats = ["latitude", "longitude"]
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] in classes:
+            return False
+        if args[0] in classes:
             if len(args) > 1:
-                k = args[0] + "." + args[1]
-                if k in models.storage.all():
+                key = args[0] + "." + args[1]
+                if key in models.storage.all():
                     if len(args) > 2:
                         if len(args) > 3:
-                            if args[0] == "Place":
-                                if args[2] in integers:
-                                    try:
-                                        args[3] = int(args[3])
-                                    except:
-                                        args[3] = 0
-                                elif args[2] in floats:
-                                    try:
-                                        args[3] = float(args[3])
-                                    except:
-                                        args[3] = 0.0
-                            setattr(models.storage.all()[k], args[2], args[3])
-                            models.storage.all()[k].save()
+                            setattr(models.storage.all()[key], args[2], args[3])
+                            models.storage.all()[key].save()
                         else:
                             print("** value missing **")
                     else:
@@ -154,6 +140,8 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
+
+
     def do_destroy(self, arg):
         """This deletes an instance based on the class and id
         It is a command to delete an instance
@@ -163,11 +151,12 @@ class HBNBCommand(cmd.Cmd):
         args = shlex.split(arg)
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] in classes:
+            return False
+        if args[0] in classes:
             if len(args) > 1:
                 key = args[0] + "." + args[1]
                 if key in models.storage.all():
-                    models.storage.all().pop(key)
+                    del models.storage.all()[key]
                     models.storage.save()
                 else:
                     print("** no instance found **")
@@ -177,25 +166,49 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_all(self, arg):
-        """This prints string representations of instances
-        It is a command to print string representations of instances
+        """This prints all instances of a class
+        It is a command to print all instances of a class
         The command syntax is all <Class name>
-        It prints string representations of instances
+        It prints all instances of a class
         """
         args = shlex.split(arg)
-        obj_list = []
         if len(args) == 0:
-            obj_dict = models.storage.all()
+            print([str(value) for value in models.storage.all().values()])
         elif args[0] in classes:
-            obj_dict = models.storage.all(classes[args[0]])
+            print([str(value) for key, value in models.storage.all().items()
+                   if args[0] in key])
         else:
             print("** class doesn't exist **")
-            return False
-        for key in obj_dict:
-            obj_list.append(str(obj_dict[key]))
-        print("[", end="")
-        print(", ".join(obj_list), end="")
-        print("]")
+
+    def do_count(self, arg):
+        """This counts the number of instances of a class
+        It is a command to count the number of instances of a class
+        The command syntax is count <Class name>
+        It counts the number of instances of a class
+        """
+        args = shlex.split(arg)
+        if len(args) == 0:
+            print(len(models.storage.all()))
+        elif args[0] in classes:
+            print(len([value for key, value in models.storage.all().items()
+                       if args[0] in key]))
+        else:
+            print("** class doesn't exist **")
+
+    def do_help(self, arg):
+        """This prints the help message
+        It is a command to print the help message
+        The command syntax is help <command>
+        It prints the help message
+        """
+        cmd.Cmd.do_help(self, arg)
+
+    def default(self, arg):
+        """This is the default method for the command interpreter
+        It is a method that is called when an invalid command is entered
+        It prints an error message
+        """
+        print("*** Unknown syntax: {}".format(arg))
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
