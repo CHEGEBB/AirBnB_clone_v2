@@ -9,8 +9,6 @@ from sqlalchemy import Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
 import models
-from models import Amenity
-from models import Review
 
 
 class Place(BaseModel, Base):
@@ -49,21 +47,21 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             """This is the getter method for the reviews attribute"""
-            all_reviews = models.storage.all(Review)
+            all_reviews = models.storage.all(models.Review)
             place_reviews = [review for review in all_reviews.values() if review.place_id == self.id]
             return place_reviews
 
         @property
         def amenities(self):
             """This is the getter method for the amenities attribute"""
-            all_amenities = models.storage.all(Amenity)
+            all_amenities = models.storage.all(models.Amenity)
             place_amenities = [amenity for amenity in all_amenities.values() if amenity.place_id == self.id]
             return place_amenities
 
         @amenities.setter
         def amenities(self, obj):
             """This is the setter method for the amenities attribute"""
-            if isinstance(obj, Amenity):
+            if isinstance(obj, models.Amenity):
                 obj.place_id = self.id
                 models.storage.new(obj)
                 models.storage.save()
