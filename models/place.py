@@ -1,18 +1,10 @@
-#!/usr/bin/python3
-
-"""This is the place module and it contains the Place class
-The Place class inherits from the BaseModel class
-"""
-
 import os
 from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
 from models.review import Review
-from models.amenity import Amenity
 from sqlalchemy.ext.declarative import declarative_base
 import models
-
 
 if os.getenv('HBNB_TYPE_STORAGE') == 'db':
     Base = declarative_base()
@@ -25,7 +17,6 @@ if os.getenv('HBNB_TYPE_STORAGE') == 'db':
                                  primary_key=True, nullable=False))
 else:
     Base = BaseModel
-
 
 class Place(Base):
     """This is the Place class it represents the place
@@ -46,7 +37,8 @@ class Place(Base):
         longitude = Column(Float, nullable=True)
         reviews = relationship("Review", backref="place",
                                cascade="all, delete")
-        amenities = relationship("Amenity",
+        # Define amenities relationship here
+        amenities = relationship("models.amenity.Amenity",
                                  secondary=place_amenity, viewonly=False)
     else:
         city_id = ""
@@ -96,3 +88,6 @@ class Place(Base):
         super().__init__(*args, **kwargs)
         if os.getenv('HBNB_TYPE_STORAGE') != 'db':
             self.amenity_ids = []
+
+        # Import User class here to avoid circular import
+        from models.user import User
