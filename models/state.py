@@ -1,50 +1,45 @@
 #!/usr/bin/python3
 
-"""This is the init file of the models module it contains the storage instance
-The storage instance is a FileStorage instance
-It is a dictionary that holds all the instances of the classes
+"""This module contains the State class that inherits from BaseModel
+It is the State of the HBnB project
+It is a class that defines the State
 """
-
-from os import getenv
-from models.engine.file_storage import FileStorage
-from models.engine.db_storage import DBStorage
-from models.city import City
+#importing modules while avoiding circular imports
 from models.base_model import BaseModel
-from sqlalchemy.ext.declarative import declarative_base
+import models
+from models.city import City
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import os
 
-if getenv('HBNB_TYPE_STORAGE') == 'db':
-    storage = DBStorage()
-    storage.reload()
-else:
-    storage = FileStorage()
-    storage.reload()
-
-Base = declarative_base()
-
-class State(BaseModel, Base):
-    """This is the state class
-    The state class inherits from the BaseModel class
+class State(BaseModel):
+    """This is the State class
+    It is the State of the HBnB project
+    It is a class that defines the State
     """
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state")
     else:
         name = ""
 
-    def __init__(self, *args, **kwargs):
-        """initializes state"""
-        super().__init__(*args, **kwargs)
-
-    if getenv('HBNB_TYPE_STORAGE') != 'db':
+    if os.getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):
-            """getter for list of city instances related to the state"""
+            """This is a getter attribute that returns the list of City instances
+            It is a getter attribute that returns the list of City instances
+            """
             city_list = []
-            all_cities = storage.all(City)
-            for city in all_cities.values():
+            for city in models.storage.all(City).values():
                 if city.state_id == self.id:
                     city_list.append(city)
             return city_list
+        
+
+    def __init__(self, *args, **kwargs):
+        """This initializes the State instance
+        It is the initialization of the State instance
+        The State instance is initialized
+        """
+        super().__init__(*args, **kwargs)
