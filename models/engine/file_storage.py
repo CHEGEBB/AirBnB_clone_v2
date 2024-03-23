@@ -1,17 +1,15 @@
 #!/usr/bin/python3
-"""This module contains the FileStorage class
-It serializes instances to a JSON file and deserializes back to instances
-This module contains the following classes:
-"""
+"""This module contains the FileStorage class"""
 
+
+import json
+from models.amenity import Amenity
+from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-from models.amenity import Amenity
-from models.base_model import BaseModel
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
