@@ -22,23 +22,19 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    def all(self):
-        """This is the all method
-        It returns the dictionary __objects
-        """
-        return FileStorage.__objects
+    def all(self, cls=None):
+        """Returns the list of objects of one type of class."""
+        if cls is None:
+            return self.__objects.values()
+        return [obj for obj in self.__objects.values() if isinstance(obj, cls)]
 
     def new(self, obj):
-        """This is the new method
-        It sets in __objects the obj with key <obj class name>.id
-        """
+        """Sets in __objects the obj with key <obj class name>.id."""
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
 
     def save(self):
-        """This is the save method
-        It serializes __objects to the JSON file (path: __file_path)
-        """
+        """Serializes __objects to the JSON file."""
         new_dict = {}
         for key, value in FileStorage.__objects.items():
             new_dict[key] = value.to_dict()
@@ -46,31 +42,25 @@ class FileStorage:
             json.dump(new_dict, f)
 
     def reload(self):
-        """This is the reload method
-        It deserializes the JSON file to __objects (only if the JSON file exists)
-        """
+        """Deserializes the JSON file to __objects."""
         if os.path.isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, mode='r', encoding='utf-8') as f:
                 new_dict = json.load(f)
             for key, value in new_dict.items():
                 cls_name = key.split(".")[0]
-                cls = globals()[cls_name]  # Using globals() instead of eval for security
+                cls = globals()[cls_name]
                 obj = cls(**value)
-                obj_key = "{}.{}".format(cls_name, obj.id)  # Corrected key format
-                FileStorage.__objects[obj_key] = obj  # Corrected assignment
+                obj_key = "{}.{}".format(cls_name, obj.id)
+                FileStorage.__objects[obj_key] = obj
 
     def delete(self, obj=None):
-        """This is the delete method
-        It deletes obj from __objects if it’s inside
-        """
-        if obj:
+        """Deletes obj from __objects if it’s inside."""
+        if obj is not None:
             key = "{}.{}".format(obj.__class__.__name__, obj.id)
             if key in FileStorage.__objects:
                 del FileStorage.__objects[key]
                 self.save()
 
     def close(self):
-        """This is the close method
-        It calls reload method for deserializing the JSON file to objects
-        """
+        """Calls reload method for deserializing the JSON file."""
         self.reload()
