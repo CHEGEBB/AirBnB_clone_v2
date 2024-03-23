@@ -181,6 +181,7 @@ class HBNBCommand(cmd.Cmd):
         It is a command to print string representations of instances
         The command syntax is all <Class name>
         It prints string representations of instances
+        it prints all instances of a class if a class name is given
         """
         args = shlex.split(arg)
         obj_list = []
