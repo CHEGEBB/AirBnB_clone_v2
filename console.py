@@ -18,6 +18,7 @@ import cmd
 import shlex
 import models
 from models.amenity import Amenity
+
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
@@ -28,6 +29,7 @@ class HBNBCommand(cmd.Cmd):
     It is the entry point of the command interpreter
     """
     prompt = '(hbnb) '
+
     def _key_value_parser(self, args):
         """This creates a dictionary from a list of strings
         It is a helper function for the create command
@@ -112,7 +114,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
-
     def do_update(self, arg):
         """This updates an instance based on the class and id
         It is a command to update an instance
@@ -148,6 +149,28 @@ class HBNBCommand(cmd.Cmd):
                             print("** value missing **")
                     else:
                         print("** attribute name missing **")
+                else:
+                    print("** no instance found **")
+            else:
+                print("** instance id missing **")
+        else:
+            print("** class doesn't exist **")
+
+    def do_destroy(self, arg):
+        """This deletes an instance based on the class and id
+        It is a command to delete an instance
+        The command syntax is destroy <Class name> <id>
+        It deletes an instance based on the class and id
+        """
+        args = shlex.split(arg)
+        if len(args) == 0:
+            print("** class name missing **")
+        elif args[0] in classes:
+            if len(args) > 1:
+                key = args[0] + "." + args[1]
+                if key in models.storage.all():
+                    models.storage.all().pop(key)
+                    models.storage.save()
                 else:
                     print("** no instance found **")
             else:
