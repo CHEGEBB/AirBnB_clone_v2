@@ -58,18 +58,16 @@ class FileStorage:
             json.dump(new_dict, f)
 
     def reload(self):
-        """This method loads the current database session from the file system
-        This method loads the current database session from the file system.
-        It loads the current database session from the file system.
-        """
+        """This method loads the current database session from the file system"""
         if path.isfile(self.__file_path):
-            with open(self.__file_path, 'r', encoding='utf-8') as f:
-                new_dict = json.load(f)
-            for key, value in new_dict.items():
-                cls = value['__class__']
-                if cls in classes:
-                    obj = classes[cls](**value)
-                    self.__objects[key] = obj
+            with open(self.__file_path, 'r', encoding='utf-8') as f:new_dict = json.load(f)
+        for key, value in new_dict.items():
+            cls_name = value.get('__class__')
+            if cls_name in classes:
+                cls = classes[cls_name]
+                obj = cls(**value)
+                self.__objects[key] = obj
+
 
     def delete(self, obj=None):
         """This method deletes an object from the current database session
