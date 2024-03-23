@@ -30,6 +30,7 @@ class HBNBCommand(cmd.Cmd):
     It is a command interpreter for the HBnB project
     """
     prompt = '(hbnb) '
+
     def _key_value_parser(self, args):
         """This creates a dictionary from a list of strings
         It creates a dictionary from a list of strings
@@ -75,22 +76,23 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel, saves it to JSON file, and prints the id
-        The create method creates a new instance of BaseModel
-        It saves the new instance to a JSON file
-        It prints the id of the new instance
-        """
-
-        args = arg.split()
+        """Creates a new instance of a class, saves it to JSON file, and prints the id"""
+        args = shlex.split(arg)
         if len(args) == 0:
             print("** class name missing **")
-            return False
-        if args[0] in classes:
-            new_dict = self._key_value_parser(args[1:])
-            instance = classes[args[0]](**new_dict)
-        else:
+            return
+        class_name = args[0]
+        if class_name not in classes:
             print("** class doesn't exist **")
-            return False
+            return
+        class_obj = classes[class_name]
+        if len(args) == 1:
+            # No attributes provided, create an instance without any additional arguments
+            instance = class_obj()
+        else:
+            # Attributes provided, parse them and create an instance
+            new_dict = self._key_value_parser(args[1:])
+            instance = class_obj(**new_dict)
         print(instance.id)
         instance.save()
 
