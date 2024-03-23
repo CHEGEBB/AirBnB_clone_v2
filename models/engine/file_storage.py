@@ -54,9 +54,10 @@ class FileStorage:
                 new_dict = json.load(f)
             for key, value in new_dict.items():
                 cls_name = key.split(".")[0]
-                cls = eval(cls_name)
+                cls = globals()[cls_name]  # Using globals() instead of eval for security
                 obj = cls(**value)
-                FileStorage.__objects[key] = obj 
+                obj_key = "{}.{}".format(cls_name, obj.id)  # Corrected key format
+                FileStorage.__objects[obj_key] = obj  # Corrected assignment
 
     def delete(self, obj=None):
         """This is the delete method
