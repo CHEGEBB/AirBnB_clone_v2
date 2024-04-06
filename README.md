@@ -33,3 +33,4 @@ Before we begin, here are some resources to guide you:
 ## 🌐 Browser loading process
 ## 🎨 Basics of CSS, adding styles, and using selectors
 ## 🔍 CSS Specificity and Box properties
+## trying out merge
