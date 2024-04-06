@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
-nginx -t
-service nginx restart
+tr -d '\r' < 1-debugging_made_short > 1-debugging_made_short_fixed
+chmod +x 1-debugging_made_short_fixed
+./1-debugging_made_short_fixed
