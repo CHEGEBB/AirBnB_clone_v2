@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sed -i 's/^M$//' 1-debugging_made_short
+chmod +x 1-debugging_made_short
+./1-debugging_made_short

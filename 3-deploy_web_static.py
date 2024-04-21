@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """
-Fabric script based on the file 2-do_deploy_web_static.py that creates and
-distributes an archive to the web servers
+Fabric script based on the file 2-do_deploy_web_static.py that creates 
 """
 
 from fabric.api import env, local, put, run
 from datetime import datetime
 from os.path import exists, isdir
 env.hosts = ['52.91.145.56', '100.26.210.63']
+
 
 def do_pack():
     """generates a tgz archive"""

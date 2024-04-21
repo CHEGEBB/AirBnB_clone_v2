@@ -1,0 +1,5 @@
+#!/bin/bash
+
+tr -d '\r' < 1-debugging_made_short > 1-debugging_made_short_fixed
+chmod +x 1-debugging_made_short_fixed
+./1-debugging_made_short_fixed
