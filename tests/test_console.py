@@ -1,71 +1,40 @@
 #!/usr/bin/python3
-"""This module contains the test for the console module
-This module contains the test for the console module.
-The test ensures the console module is working as expected.
+"""
+Contains the class TestConsoleDocs
 """
 
-from io import StringIO
-from sqlalchemy.ext.declarative import declarative_base
-import os
-from unittest.mock import patch
-from models import storage
-from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.place import Place
-import unittest
-import pep8
-import inspect
 import console
-from console import HBNBCommand
-import json
-import sys
-from models.amenity import Amenity
-from models.review import Review
+import inspect
+import pep8
+import unittest
+HBNBCommand = console.HBNBCommand
 
-if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-    from models.engine.db_storage import DBStorage
-    storage = DBStorage()
-else:
-    from models.engine.file_storage import FileStorage
-    storage = FileStorage()
 
 class TestConsoleDocs(unittest.TestCase):
-    """This class contains test cases for the console module
-    This class contains test cases for the
-    console module in the console module.
-    It includes test cases for the console module documentation and style.
-    """
+    """Class for testing documentation of the console"""
     def test_pep8_conformance_console(self):
-        """This method checks for PEP8 conformance in the console module.
-        It ensures the console module conforms to PEP8 standards.
-        """
-        result = pep8.Checker(['console.py']).check_all()
+        """Test that console.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['console.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_console(self):
-        """This method checks for PEP8 conformance in the test_console.py file.
-        It ensures the test_console.py file conforms to PEP8 standards.
-        """
-        result = pep8.Checker(['tests/test_console.py']).check_all()
+        """Test that tests/test_console.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['tests/test_console.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_console_module_docstring(self):
-        """This method checks for the console.py module docstring
-        It ensures the console.py module has a docstring.
-        """
+        """Test for the console.py module docstring"""
         self.assertIsNot(console.__doc__, None,
                          "console.py needs a docstring")
         self.assertTrue(len(console.__doc__) >= 1,
                         "console.py needs a docstring")
 
     def test_HBNBCommand_class_docstring(self):
-        """This method checks for the HBNBCommand class docstring
-        It ensures the HBNBCommand class has a docstring.
-        """
+        """Test for the HBNBCommand class docstring"""
         self.assertIsNot(HBNBCommand.__doc__, None,
                          "HBNBCommand class needs a docstring")
         self.assertTrue(len(HBNBCommand.__doc__) >= 1,

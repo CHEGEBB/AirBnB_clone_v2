@@ -14,7 +14,7 @@ $nginx_conf = "server {
     }
 
     location /redirect_me {
-        return 301 https://github.com/CHEGEBB;
+        return 301 https://github.com/waltertaya;
     }
 
     error_page 404 /404.html;
